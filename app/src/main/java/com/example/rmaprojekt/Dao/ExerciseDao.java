@@ -1,4 +1,4 @@
-package com.example.rmaprojekt.DAO;
+package com.example.rmaprojekt.Dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
