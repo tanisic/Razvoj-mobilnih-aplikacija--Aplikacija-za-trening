@@ -20,6 +20,9 @@ public class Exercise{
     @ColumnInfo(name="exercise_reps")
     public int reps;
 
+    @ColumnInfo(name="exercise_sets")
+    public int sets;
+
     public Exercise(@NonNull String exerciseName){
         this.exerciseName = exerciseName;
     }
