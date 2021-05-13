@@ -36,6 +36,9 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     // Room components
     implementation "androidx.room:room-runtime:2.2.5"
+    implementation 'androidx.navigation:navigation-fragment:2.2.2'
+    implementation 'androidx.navigation:navigation-ui:2.2.2'
+    implementation 'androidx.wear:wear:1.0.0'
     annotationProcessor "androidx.room:room-compiler:2.2.5"
     androidTestImplementation "androidx.room:room-testing:2.2.5"
 
@@ -52,6 +55,7 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    compileOnly 'com.google.android.wearable:wearable:2.6.0'
 }
 ext {
     appCompatVersion = '1.2.0'

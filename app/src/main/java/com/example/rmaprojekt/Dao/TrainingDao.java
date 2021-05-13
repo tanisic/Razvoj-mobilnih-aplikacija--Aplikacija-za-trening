@@ -46,7 +46,7 @@ public interface TrainingDao {
     public void updateRoutine(Routine routine);
 
     @Query("SELECT * FROM routine WHERE routine_id=:ID")
-    public void getRoutine(long ID);
+    public Routine getRoutine(long ID);
 
     //RoutineExercise
     @Query("SELECT * FROM routine")

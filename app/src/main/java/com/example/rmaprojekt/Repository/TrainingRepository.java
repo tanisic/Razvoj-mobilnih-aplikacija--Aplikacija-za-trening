@@ -22,22 +22,23 @@ public class TrainingRepository {
         allExercises = (LiveData<List<Exercise>>) trainingDao.getAllExercises();
     }
 
-    public  LiveData<List<Exercise>> getAllExercises(){
+    public  LiveData<List<Exercise>> getAllExercises() {
         return allExercises;
     }
-    void insertExercise(Exercise exercise){
+
+    public void insertExercise(Exercise exercise){
         TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
             trainingDao.insertExercise(exercise);
                 });
     }
 
-    void updateExercise(Exercise exercise){
+    public void updateExercise(Exercise exercise){
         TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
             trainingDao.updateExercise(exercise);
         });
     }
 
-    void deleteExercise(Exercise exercise){
+    public void deleteExercise(Exercise exercise){
         TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
             trainingDao.deleteExercise(exercise);
         });

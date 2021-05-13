@@ -16,12 +16,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUI();
-
+        btnExercises.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exerciseActivity();
+            }
+        });
     }
     public void setUI(){
         btnRoutines = findViewById(R.id.buttonRoutines);
         btnExercises = findViewById(R.id.buttonExercises);
         btnLogs = findViewById(R.id.buttonLogs);
+    }
+    private void exerciseActivity(){
+        Intent intent = new Intent(this, ExercisesActivity.class);
+        startActivity(intent);
     }
 
 
