@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.ListAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.ViewHolders.ExercisesViewHolder;
 
-public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHolder> {
+public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHolder>{
 
     public ExerciseListAdapter(@NonNull DiffUtil.ItemCallback<Exercise> diffCallback) {
         super(diffCallback);
@@ -27,7 +27,7 @@ public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHold
         holder.bind(current.getExerciseName());
     }
 
-    public static class ExerciseDiff extends DiffUtil.ItemCallback<Exercise>{
+    public static class ExerciseDiff extends  DiffUtil.ItemCallback<Exercise>{
 
         @Override
         public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {

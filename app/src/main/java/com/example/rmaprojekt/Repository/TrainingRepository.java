@@ -2,6 +2,7 @@ package com.example.rmaprojekt.Repository;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.example.rmaprojekt.Dao.TrainingDao;
@@ -16,7 +17,7 @@ public class TrainingRepository {
     private LiveData<List<Exercise>> allExercises;
 
 
-    public TrainingRepository(Application application){
+    public TrainingRepository(@NonNull Application application){
         TrainingRoomDatabase db = TrainingRoomDatabase.getDatabase(application);
         trainingDao = db.trainingDao();
         allExercises = (LiveData<List<Exercise>>) trainingDao.getAllExercises();

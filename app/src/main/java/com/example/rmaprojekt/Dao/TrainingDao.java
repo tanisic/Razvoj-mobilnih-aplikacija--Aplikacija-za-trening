@@ -5,6 +5,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Transaction;
 import androidx.room.Update;
 
 import com.example.rmaprojekt.Entities.Exercise;
@@ -49,6 +50,7 @@ public interface TrainingDao {
     public Routine getRoutine(long ID);
 
     //RoutineExercise
+    @Transaction
     @Query("SELECT * FROM routine")
     List<RoutineWithExercises> getRoutinesWithExercises();
 

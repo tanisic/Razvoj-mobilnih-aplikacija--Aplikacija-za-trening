@@ -18,7 +18,8 @@ import java.util.concurrent.Executors;
 
 @Database(
         entities = {Exercise.class, Routine.class, RoutineExercise.class},
-        version = 1
+        version = 1,
+        exportSchema = false
 )
 public abstract class TrainingRoomDatabase extends RoomDatabase {
 
@@ -35,7 +36,8 @@ public abstract class TrainingRoomDatabase extends RoomDatabase {
             synchronized (TrainingRoomDatabase.class){
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            TrainingRoomDatabase.class,DB_NAME).addCallback(sRoomDatabaseCallback).build();
+                            TrainingRoomDatabase.class,DB_NAME).
+                            addCallback(sRoomDatabaseCallback).build();
                 }
             }
         }
