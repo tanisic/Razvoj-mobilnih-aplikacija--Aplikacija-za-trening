@@ -1,10 +1,12 @@
-package com.example.rmaprojekt.ViewModels;
+package com.example.rmaprojekt.ViewModelFactory;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
 
 public class ExerciseViewModelFactory implements ViewModelProvider.Factory {
     private Application mApplication;

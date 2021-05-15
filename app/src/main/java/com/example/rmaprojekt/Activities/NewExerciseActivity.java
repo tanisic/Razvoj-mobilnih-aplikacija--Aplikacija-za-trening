@@ -1,4 +1,4 @@
-package com.example.rmaprojekt;
+package com.example.rmaprojekt.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,6 +8,8 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.rmaprojekt.R;
 
 public class NewExerciseActivity extends AppCompatActivity {
 

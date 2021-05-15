@@ -1,4 +1,4 @@
-package com.example.rmaprojekt;
+package com.example.rmaprojekt.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -12,8 +12,9 @@ import android.widget.Toast;
 
 import com.example.rmaprojekt.Adapter.ExerciseListAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
+import com.example.rmaprojekt.R;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
-import com.example.rmaprojekt.ViewModels.ExerciseViewModelFactory;
+import com.example.rmaprojekt.ViewModelFactory.ExerciseViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ExercisesActivity extends AppCompatActivity {

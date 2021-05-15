@@ -36,8 +36,9 @@ public abstract class TrainingRoomDatabase extends RoomDatabase {
             synchronized (TrainingRoomDatabase.class){
                 if (INSTANCE == null){
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            TrainingRoomDatabase.class,DB_NAME).
-                            addCallback(sRoomDatabaseCallback).build();
+                            TrainingRoomDatabase.class,DB_NAME).addCallback(sRoomDatabaseCallback).
+                            fallbackToDestructiveMigration()
+                            .build();
                 }
             }
         }
@@ -59,6 +60,8 @@ public abstract class TrainingRoomDatabase extends RoomDatabase {
                 Exercise exercise = new Exercise("Exercise 1");
                 dao.insertExercise(exercise);
                 exercise = new Exercise("Exercise 2");
+                dao.insertExercise(exercise);
+                exercise = new Exercise("Exercise 3");
                 dao.insertExercise(exercise);
             });
         }
