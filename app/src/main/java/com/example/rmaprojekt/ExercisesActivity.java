@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.rmaprojekt.Adapter.ExerciseListAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
+import com.example.rmaprojekt.ViewModels.ExerciseViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ExercisesActivity extends AppCompatActivity {
@@ -29,8 +30,10 @@ public class ExercisesActivity extends AppCompatActivity {
         final ExerciseListAdapter adapter = new ExerciseListAdapter(new ExerciseListAdapter.ExerciseDiff());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        exerciseViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
-        exerciseViewModel.getAllExercises().observe(this, adapter::submitList);
+        exerciseViewModel = new ViewModelProvider(this,new ExerciseViewModelFactory(this.getApplication(),"params")).get(ExerciseViewModel.class);
+        exerciseViewModel.getAllExercises().observe(this, exercises -> {
+            adapter.submitList(exercises);
+        });
         addExerciseFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

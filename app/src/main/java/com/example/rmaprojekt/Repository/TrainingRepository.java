@@ -4,6 +4,7 @@ import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.example.rmaprojekt.Dao.TrainingDao;
 import com.example.rmaprojekt.Database.TrainingRoomDatabase;
@@ -14,13 +15,16 @@ import java.util.concurrent.ExecutorService;
 
 public class TrainingRepository {
     private TrainingDao trainingDao;
-    private LiveData<List<Exercise>> allExercises;
+    private MutableLiveData<List<Exercise>> allExercises = new MutableLiveData<>();
+
 
 
     public TrainingRepository(@NonNull Application application){
         TrainingRoomDatabase db = TrainingRoomDatabase.getDatabase(application);
         trainingDao = db.trainingDao();
-        allExercises = (LiveData<List<Exercise>>) trainingDao.getAllExercises();
+        TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
+            allExercises.postValue(trainingDao.getAllExercises());
+        });
     }
 
     public  LiveData<List<Exercise>> getAllExercises() {

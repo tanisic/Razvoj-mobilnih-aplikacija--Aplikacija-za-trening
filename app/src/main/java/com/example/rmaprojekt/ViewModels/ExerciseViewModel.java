@@ -17,15 +17,11 @@ public class ExerciseViewModel extends AndroidViewModel {
     private TrainingRepository trainingRepository;
     private LiveData<List<Exercise>> allExercises;
 
-    public ExerciseViewModel(@NonNull Application application) {
+    public ExerciseViewModel(@NonNull Application application, String mParam) {
         super(application);
         this.trainingRepository = new TrainingRepository(application);
         this.allExercises = trainingRepository.getAllExercises();
     }
-
-
-
-
 
     public LiveData<List<Exercise>> getAllExercises(){ return allExercises;}
 
