@@ -21,14 +21,14 @@ public class ExercisesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton addExerciseFab;
     private ExerciseViewModel exerciseViewModel;
-    public static final int NEW_EXERCISE_ACTIVITY_REQUEST_CODE = 1;
+    final ExerciseListAdapter adapter = new ExerciseListAdapter(new ExerciseListAdapter.ExerciseDiff());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
         recyclerView = findViewById(R.id.recyclerview);
         addExerciseFab=findViewById(R.id.fab);
-        final ExerciseListAdapter adapter = new ExerciseListAdapter(new ExerciseListAdapter.ExerciseDiff());
+
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         exerciseViewModel = new ViewModelProvider(this,new ExerciseViewModelFactory(this.getApplication(),"params")).get(ExerciseViewModel.class);
@@ -39,22 +39,14 @@ public class ExercisesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ExercisesActivity.this,NewExerciseActivity.class);
-                startActivityForResult(intent, NEW_EXERCISE_ACTIVITY_REQUEST_CODE);
-
+                startActivity(intent);
             }
         });
     }
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == NEW_EXERCISE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-            Exercise exercise = new Exercise(data.getStringExtra(NewExerciseActivity.EXTRA_REPLY));
-            exerciseViewModel.insert(exercise);
-        } else {
-            Toast.makeText(
-                    getApplicationContext(),
-                    R.string.empty_not_saved,
-                    Toast.LENGTH_LONG).show();
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter.notifyDataSetChanged();
     }
 }

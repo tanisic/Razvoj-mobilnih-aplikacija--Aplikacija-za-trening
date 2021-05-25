@@ -8,31 +8,49 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.rmaprojekt.Adapter.ExerciseListAdapter;
+import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.R;
+import com.example.rmaprojekt.Repository.TrainingRepository;
 
 public class NewExerciseActivity extends AppCompatActivity {
 
-    public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
-    private EditText exerciseEditText;
+
+    private EditText exerciseEditText,exerciseRepsEditText, exerciseSetsEditText;
+    private Button saveExerciseButton;
+    private String exerciseName, exerciseReps, exerciseSets;
+    private TrainingRepository trainingRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_exercise);
-        final Button button = findViewById(R.id.button_save);
-        button.setOnClickListener(new View.OnClickListener() {
+        trainingRepository = new TrainingRepository(getApplication());
+        SetUI();
+        saveExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent replyIntent = new Intent();
-                if (TextUtils.isEmpty(exerciseEditText.getText())){
-                    setResult(RESULT_CANCELED,replyIntent);
+                exerciseName = exerciseEditText.getText().toString();
+                exerciseReps = exerciseRepsEditText.getText().toString();
+                exerciseSets = exerciseSetsEditText.getText().toString();
+                if(exerciseName.matches("") || exerciseReps.matches("") ||
+                        exerciseSets.matches("")){
+                    Toast.makeText(getApplicationContext(),"You did not entered exercise info!",Toast.LENGTH_LONG).show();
                 }else{
-                    String exercise = exerciseEditText.getText().toString();
-                    replyIntent.putExtra(EXTRA_REPLY,exercise);
+                    trainingRepository.insertExercise(new Exercise(exerciseName,Integer.parseInt(exerciseReps),Integer.parseInt(exerciseSets)));
+                    finish();
                 }
-                finish();
             }
         });
+
+    }
+
+    void SetUI(){
+        exerciseEditText = findViewById(R.id.addExerciseName);
+        saveExerciseButton = findViewById(R.id.button_save);
+        exerciseRepsEditText = findViewById(R.id.addExerciseReps);
+        exerciseSetsEditText = findViewById(R.id.addExerciseSets);
     }
 }

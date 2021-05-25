@@ -24,7 +24,8 @@ public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHold
     @Override
     public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int position) {
         Exercise current = getItem(position);
-        holder.bind(current.getExerciseName());
+        holder.bind(current);
+        
     }
 
     public static class ExerciseDiff extends  DiffUtil.ItemCallback<Exercise>{

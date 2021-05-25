@@ -5,13 +5,33 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/edit_word"
+        android:id="@+id/addExerciseName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_height"
         android:fontFamily="sans-serif-light"
-        android:hint="@string/hint_exercise"
+        android:hint="Exercise name..."
         android:inputType="textAutoComplete"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp" />
+    <EditText
+        android:id="@+id/addExerciseReps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="Reps..."
+        android:inputType="number"
+        android:layout_margin="@dimen/big_padding"
+        android:textSize="18sp" />
+    <EditText
+        android:id="@+id/addExerciseSets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/min_height"
+        android:fontFamily="sans-serif-light"
+        android:hint="Sets..."
+        android:inputType="number"
         android:layout_margin="@dimen/big_padding"
         android:textSize="18sp" />
 
@@ -20,7 +40,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/buttonLabel"
-        android:text="@string/button_save"
+        android:text="Save exercise"
         android:layout_margin="@dimen/big_padding"
         android:textColor="@color/buttonLabel" />
 

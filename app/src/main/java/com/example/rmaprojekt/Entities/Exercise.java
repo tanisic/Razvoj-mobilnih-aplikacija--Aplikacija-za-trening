@@ -23,12 +23,21 @@ public class Exercise{
     @ColumnInfo(name="exercise_sets")
     public int sets;
 
-    public Exercise(@NonNull String exerciseName){
+    public Exercise(String exerciseName, int reps, int sets) {
         this.exerciseName = exerciseName;
+        this.reps = reps;
+        this.sets = sets;
     }
 
     public String getExerciseName(){
         return this.exerciseName;
     }
 
+    public int getReps() {
+        return reps;
+    }
+
+    public int getSets() {
+        return sets;
+    }
 }
