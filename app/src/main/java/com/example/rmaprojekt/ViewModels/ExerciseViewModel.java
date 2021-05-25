@@ -25,5 +25,13 @@ public class ExerciseViewModel extends AndroidViewModel {
 
     public LiveData<List<Exercise>> getAllExercises(){ return allExercises;}
 
-    public void insert(Exercise exercise){ trainingRepository.insertExercise(exercise);}
+    public void insertExercise(Exercise exercise){ trainingRepository.insertExercise(exercise);}
+
+    public Exercise getExerciseByPosition(int position){
+        return allExercises.getValue().get(position);
+    }
+
+    public void removeExercise(Exercise exercise){
+        trainingRepository.deleteExercise(exercise);
+    }
 }

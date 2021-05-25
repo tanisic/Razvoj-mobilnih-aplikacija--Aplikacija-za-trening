@@ -1,7 +1,9 @@
 package com.example.rmaprojekt.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -22,23 +24,25 @@ public class ExercisesActivity extends AppCompatActivity {
     private FloatingActionButton addExerciseFab;
     private ExerciseViewModel exerciseViewModel;
     final ExerciseListAdapter adapter = new ExerciseListAdapter(new ExerciseListAdapter.ExerciseDiff());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
         recyclerView = findViewById(R.id.recyclerview);
-        addExerciseFab=findViewById(R.id.fab);
+        addExerciseFab = findViewById(R.id.fab);
 
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        exerciseViewModel = new ViewModelProvider(this,new ExerciseViewModelFactory(this.getApplication(),"params")).get(ExerciseViewModel.class);
+        exerciseViewModel = new ViewModelProvider(this, new ExerciseViewModelFactory(this.getApplication(), "params")).get(ExerciseViewModel.class);
         exerciseViewModel.getAllExercises().observe(this, exercises -> {
             adapter.submitList(exercises);
         });
+        new ItemTouchHelper(exerciseTouchHelperCallback).attachToRecyclerView(recyclerView);
         addExerciseFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExercisesActivity.this,NewExerciseActivity.class);
+                Intent intent = new Intent(ExercisesActivity.this, NewExerciseActivity.class);
                 startActivity(intent);
             }
         });
@@ -49,4 +53,20 @@ public class ExercisesActivity extends AppCompatActivity {
         super.onResume();
         adapter.notifyDataSetChanged();
     }
+
+    ItemTouchHelper.SimpleCallback exerciseTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            int position = viewHolder.getAdapterPosition();
+            exerciseViewModel.removeExercise(
+                    exerciseViewModel.getExerciseByPosition(position));
+            adapter.notifyItemRemoved(position);
+            adapter.notifyDataSetChanged();
+        }
+    };
 }

@@ -3,11 +3,14 @@ package com.example.rmaprojekt.Adapter;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.ViewHolders.ExercisesViewHolder;
+
+import java.util.List;
 
 public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHolder>{
 
@@ -27,6 +30,7 @@ public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHold
         holder.bind(current);
         
     }
+
 
     public static class ExerciseDiff extends  DiffUtil.ItemCallback<Exercise>{
 

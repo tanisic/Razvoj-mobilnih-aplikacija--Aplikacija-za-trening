@@ -25,7 +25,6 @@ public class ExercisesViewHolder  extends RecyclerView.ViewHolder {
     }
     public void bind(Exercise exerise) {
         exerciseItemView.setText(exerise.getExerciseName());
-
         exerciseRepsTextView.setText("Reps: "+Integer.toString(exerise.getReps()));
         exerciseSetsTextView.setText("Sets: "+Integer.toString(exerise.getSets()));
     }
