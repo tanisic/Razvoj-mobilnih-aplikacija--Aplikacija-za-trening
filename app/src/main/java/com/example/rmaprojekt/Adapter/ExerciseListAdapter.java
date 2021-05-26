@@ -36,12 +36,12 @@ public class ExerciseListAdapter extends ListAdapter<Exercise, ExercisesViewHold
 
         @Override
         public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
-            return oldItem==newItem;
+            return oldItem.getExerciseID() == newItem.getExerciseID();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
-            return oldItem.getExerciseName().equals(newItem.getExerciseName());
+            return oldItem.equals(newItem);
         }
     }
 }

@@ -51,7 +51,7 @@ public class ExercisesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.notifyDataSetChanged();
+
     }
 
     ItemTouchHelper.SimpleCallback exerciseTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
