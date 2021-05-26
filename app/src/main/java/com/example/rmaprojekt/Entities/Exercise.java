@@ -2,6 +2,7 @@ package com.example.rmaprojekt.Entities;
 
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -9,7 +10,7 @@ import androidx.room.PrimaryKey;
 import java.util.Objects;
 
 @Entity(tableName="exercise")
-public class Exercise{
+public class Exercise {
 
     @PrimaryKey(autoGenerate = true)
     @NonNull
@@ -62,4 +63,16 @@ public class Exercise{
     public int hashCode() {
         return Objects.hash(exerciseID, exerciseName, reps, sets);
     }
+
+    public static DiffUtil.ItemCallback<Exercise> itemCallback = new DiffUtil.ItemCallback<Exercise>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
+            return oldItem.getExerciseID() == newItem.getExerciseID();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
 }

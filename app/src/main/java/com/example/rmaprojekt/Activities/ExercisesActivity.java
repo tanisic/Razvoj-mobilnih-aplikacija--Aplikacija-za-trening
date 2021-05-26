@@ -3,6 +3,7 @@ package com.example.rmaprojekt.Activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -10,20 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.rmaprojekt.Adapter.ExerciseListAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
+import com.example.rmaprojekt.ExerciseClickInterface;
 import com.example.rmaprojekt.R;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
 import com.example.rmaprojekt.ViewModelFactory.ExerciseViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ExercisesActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ExercisesActivity extends AppCompatActivity implements ExerciseClickInterface {
     private RecyclerView recyclerView;
     private FloatingActionButton addExerciseFab;
     private ExerciseViewModel exerciseViewModel;
-    final ExerciseListAdapter adapter = new ExerciseListAdapter(new ExerciseListAdapter.ExerciseDiff());
+    private ExerciseListAdapter exerciseListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +35,13 @@ public class ExercisesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_exercises);
         recyclerView = findViewById(R.id.recyclerview);
         addExerciseFab = findViewById(R.id.fab);
-
-        recyclerView.setAdapter(adapter);
+        exerciseListAdapter = new ExerciseListAdapter(Exercise.itemCallback,this);
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        recyclerView.setAdapter(exerciseListAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         exerciseViewModel = new ViewModelProvider(this, new ExerciseViewModelFactory(this.getApplication(), "params")).get(ExerciseViewModel.class);
         exerciseViewModel.getAllExercises().observe(this, exercises -> {
-            adapter.submitList(exercises);
+            exerciseListAdapter.submitList(exercises);
         });
         new ItemTouchHelper(exerciseTouchHelperCallback).attachToRecyclerView(recyclerView);
         addExerciseFab.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +56,8 @@ public class ExercisesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        List<Exercise> exerciseList= new ArrayList<>(exerciseListAdapter.getCurrentList());
+        exerciseListAdapter.submitList(exerciseList);
     }
 
     ItemTouchHelper.SimpleCallback exerciseTouchHelperCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
@@ -62,11 +68,17 @@ public class ExercisesActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-            int position = viewHolder.getAdapterPosition();
-            exerciseViewModel.removeExercise(
-                    exerciseViewModel.getExerciseByPosition(position));
-            adapter.notifyItemRemoved(position);
-            adapter.notifyDataSetChanged();
+
         }
     };
+
+    @Override
+    public void onDelete(int position) {
+        List<Exercise> exerciseList= new ArrayList<>(exerciseListAdapter.getCurrentList());
+        exerciseViewModel.removeExercise(position);
+        exerciseListAdapter.notifyItemRemoved(position);
+        exerciseListAdapter.submitList(exerciseList);
+
+
+    }
 }

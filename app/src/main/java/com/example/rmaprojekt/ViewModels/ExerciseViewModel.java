@@ -17,6 +17,7 @@ public class ExerciseViewModel extends AndroidViewModel {
     private TrainingRepository trainingRepository;
     private LiveData<List<Exercise>> allExercises;
 
+
     public ExerciseViewModel(@NonNull Application application, String mParam) {
         super(application);
         this.trainingRepository = new TrainingRepository(application);
@@ -31,7 +32,9 @@ public class ExerciseViewModel extends AndroidViewModel {
         return allExercises.getValue().get(position);
     }
 
-    public void removeExercise(Exercise exercise){
+    public void removeExercise(int position){
+        Exercise exercise = getExerciseByPosition(position);
         trainingRepository.deleteExercise(exercise);
+        allExercises.getValue().remove(position);
     }
 }

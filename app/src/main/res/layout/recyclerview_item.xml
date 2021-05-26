@@ -12,14 +12,14 @@
         android:id="@+id/exerciseTextView"
         style="@style/exercise_title"
         android:layout_width="120dp"
-        android:layout_height="142dp"
+        android:layout_height="match_parent"
         android:background="@android:color/holo_green_dark"
         android:text="Exercise name" />
 
     <TextView
         style="@style/exercise_title"
         android:id="@+id/exerciseRepsTextView"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="bottom"
         android:background="@android:color/holo_green_dark"
@@ -27,11 +27,16 @@
     <TextView
         style="@style/exercise_title"
         android:id="@+id/exerciseSetsTextView"
-        android:layout_width="120dp"
+        android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="bottom"
         android:background="@android:color/holo_green_dark"
         android:text="sets" />
+    <Button
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:id="@+id/deleteExercise"
+        android:text="DELETE"/>
 </LinearLayout>
 
 
