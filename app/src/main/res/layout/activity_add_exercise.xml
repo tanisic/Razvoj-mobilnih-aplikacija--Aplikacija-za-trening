@@ -35,13 +35,4 @@
         android:layout_margin="@dimen/big_padding"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/button_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/buttonLabel"
-        android:text="Save exercise"
-        android:layout_margin="@dimen/big_padding"
-        android:textColor="@color/buttonLabel" />
-
 </LinearLayout>

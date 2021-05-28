@@ -25,8 +25,8 @@ public class AddExerciseActivity extends AppCompatActivity {
             "com.example.rmaprojekt.Activities.ADD_EXERCISE_SETS";
     public static final String EXTRA_EXERCISE_REPS =
             "com.example.rmaprojekt.Activities.ADD_EXERCISE_REPS";
+
     private EditText exerciseEditText, exerciseRepsEditText, exerciseSetsEditText;
-    private Button saveExerciseButton;
     private String exerciseName, exerciseReps, exerciseSets;
     private TrainingRepository trainingRepository;
 
@@ -78,7 +78,6 @@ public class AddExerciseActivity extends AppCompatActivity {
 
     void SetUI() {
         exerciseEditText = findViewById(R.id.addExerciseName);
-        saveExerciseButton = findViewById(R.id.button_save);
         exerciseRepsEditText = findViewById(R.id.addExerciseReps);
         exerciseSetsEditText = findViewById(R.id.addExerciseSets);
     }

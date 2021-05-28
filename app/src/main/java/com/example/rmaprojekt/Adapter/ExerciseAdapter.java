@@ -23,7 +23,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         this.exerciseList = exercises;
         notifyDataSetChanged();
     }
-
+    public Exercise getNoteAt(int position){
+        return exerciseList.get(position);
+    }
     @NonNull
     @Override
     public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -55,13 +57,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
             exerciseItemView = itemView.findViewById(R.id.exerciseTextView);
             exerciseRepsTextView = itemView.findViewById(R.id.exerciseRepsTextView);
             exerciseSetsTextView = itemView.findViewById(R.id.exerciseSetsTextView);
-            deleteExercise = itemView.findViewById(R.id.deleteExercise);
-            deleteExercise.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                }
-            });
         }
         public void bind(Exercise exercise) {
             exerciseItemView.setText(exercise.getExerciseName());
