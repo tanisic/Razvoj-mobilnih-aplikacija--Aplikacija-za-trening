@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RMAprojekt">
-        <activity android:name=".Activities.AddExerciseActivity"
+        <activity android:name=".Activities.AddEditExerciseActivity"
             android:parentActivityName=".Activities.ExercisesActivity">
 
         </activity>

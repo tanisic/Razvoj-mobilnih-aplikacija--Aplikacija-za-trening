@@ -3,7 +3,13 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="16dp"
+        android:text="Exercise name:"
+        android:textSize="20dp"></TextView>
     <EditText
         android:id="@+id/addExerciseName"
         android:layout_width="match_parent"
@@ -13,26 +19,44 @@
         android:hint="Exercise name..."
         android:inputType="textAutoComplete"
         android:layout_margin="@dimen/big_padding"
-        android:textSize="18sp" />
-    <EditText
-        android:id="@+id/addExerciseReps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/min_height"
-        android:fontFamily="sans-serif-light"
-        android:hint="Reps..."
-        android:inputType="number"
-        android:layout_margin="@dimen/big_padding"
-        android:textSize="18sp" />
-    <EditText
-        android:id="@+id/addExerciseSets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="@dimen/min_height"
-        android:fontFamily="sans-serif-light"
-        android:hint="Sets..."
-        android:inputType="number"
-        android:layout_margin="@dimen/big_padding"
+
         android:textSize="18sp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+
+        android:text="Reps:"
+        android:textSize="20dp"></TextView>
+
+    <NumberPicker
+        android:id="@+id/number_picker_reps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="5dp"
+
+        android:text="Sets:"
+        android:textSize="20dp" />
+
+    <NumberPicker
+        android:id="@+id/number_picker_sets"
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginRight="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    </LinearLayout>
 </LinearLayout>

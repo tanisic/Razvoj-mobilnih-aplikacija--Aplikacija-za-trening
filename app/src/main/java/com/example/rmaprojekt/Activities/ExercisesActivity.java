@@ -18,19 +18,19 @@ import android.widget.Toast;
 
 import com.example.rmaprojekt.Adapter.ExerciseAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
-import com.example.rmaprojekt.ExerciseClickInterface;
 import com.example.rmaprojekt.R;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class ExercisesActivity extends AppCompatActivity implements ExerciseClickInterface {
+public class ExercisesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FloatingActionButton addExerciseFab;
     private ExerciseViewModel exerciseViewModel;
     private ExerciseAdapter exerciseAdapter;
-    public static final int ADD_NOTE_REQUEST = 1;
+    public static final int ADD_EXERCISE_REQUEST = 1;
+    public static final int EDIT_EXERCISE_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +59,23 @@ public class ExercisesActivity extends AppCompatActivity implements ExerciseClic
             }
         }).attachToRecyclerView(recyclerView);
 
+        exerciseAdapter.setOnExerciseClickListener(new ExerciseAdapter.OnExerciseClickListener() {
+            @Override
+            public void onExerciseClick(Exercise exercise) {
+                Intent intent = new Intent(ExercisesActivity.this, AddEditExerciseActivity.class);
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME,exercise.getName());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,exercise.getReps());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,exercise.getSets());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID,exercise.getID());
+                startActivityForResult(intent,EDIT_EXERCISE_REQUEST);
+            }
+        });
+
         addExerciseFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ExercisesActivity.this, AddExerciseActivity.class);
-                startActivityForResult(intent, ADD_NOTE_REQUEST);
+                Intent intent = new Intent(ExercisesActivity.this, AddEditExerciseActivity.class);
+                startActivityForResult(intent, ADD_EXERCISE_REQUEST);
             }
         });
 
@@ -82,15 +94,29 @@ public class ExercisesActivity extends AppCompatActivity implements ExerciseClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK) {
-            String exerciseName = data.getStringExtra(AddExerciseActivity.EXTRA_EXERCISE_NAME);
-            String exerciseReps = data.getStringExtra(AddExerciseActivity.EXTRA_EXERCISE_REPS);
-            String exerciseSets = data.getStringExtra(AddExerciseActivity.EXTRA_EXERCISE_SETS);
-            Exercise exercise = new Exercise(exerciseName,
-                    Integer.parseInt(exerciseReps),
-                    Integer.parseInt(exerciseSets));
+        if (requestCode == ADD_EXERCISE_REQUEST && resultCode == RESULT_OK) {
+            String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
+            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,1);
+            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,1);
+            Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets);
             exerciseViewModel.insert(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise saved", Toast.LENGTH_SHORT).show();
+
+        }else if (requestCode == EDIT_EXERCISE_REQUEST && resultCode == RESULT_OK){
+            long id = data.getLongExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID,-1);
+
+            if (id == -1){
+                Toast.makeText(ExercisesActivity.this,"Exercise can't be updated",Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
+            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,1);
+            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,1);
+            Exercise exercise = new Exercise(exerciseName,Integer.valueOf(exerciseReps),Integer.valueOf(exerciseSets));
+            exercise.setID(id);
+            exerciseViewModel.update(exercise);
+            Toast.makeText(ExercisesActivity.this, "Exercise updated", Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(ExercisesActivity.this, "Exercise not saved", Toast.LENGTH_SHORT).show();
@@ -117,17 +143,4 @@ public class ExercisesActivity extends AppCompatActivity implements ExerciseClic
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        exerciseAdapter.notifyDataSetChanged();
-    }
-
-
-
-    @Override
-    public void onDelete(int position) {
-
-
-    }
 }

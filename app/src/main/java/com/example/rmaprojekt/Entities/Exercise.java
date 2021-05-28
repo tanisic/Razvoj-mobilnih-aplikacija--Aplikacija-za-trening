@@ -32,11 +32,15 @@ public class Exercise {
         this.sets = sets;
     }
 
-    public long getExerciseID() {
+    public void setID(long exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    public long getID() {
         return exerciseID;
     }
 
-    public String getExerciseName(){
+    public String getName(){
         return this.exerciseName;
     }
 
@@ -67,7 +71,7 @@ public class Exercise {
     public static DiffUtil.ItemCallback<Exercise> itemCallback = new DiffUtil.ItemCallback<Exercise>() {
         @Override
         public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
-            return oldItem.getExerciseID() == newItem.getExerciseID();
+            return oldItem.getID() == newItem.getID();
         }
 
         @Override

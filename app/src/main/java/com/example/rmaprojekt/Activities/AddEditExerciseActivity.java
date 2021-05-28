@@ -8,16 +8,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.Toast;
 
-import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.R;
-import com.example.rmaprojekt.Repository.TrainingRepository;
 
-public class AddExerciseActivity extends AppCompatActivity {
+public class AddEditExerciseActivity extends AppCompatActivity {
 
     public static final String EXTRA_EXERCISE_NAME =
             "com.example.rmaprojekt.Activities.ADD_EXERCISE_NAME";
@@ -25,33 +22,55 @@ public class AddExerciseActivity extends AppCompatActivity {
             "com.example.rmaprojekt.Activities.ADD_EXERCISE_SETS";
     public static final String EXTRA_EXERCISE_REPS =
             "com.example.rmaprojekt.Activities.ADD_EXERCISE_REPS";
+    public static final String EXTRA_EXERCISE_ID =
+            "com.example.rmaprojekt.Activities.ADD_EXERCISE_ID";
 
-    private EditText exerciseEditText, exerciseRepsEditText, exerciseSetsEditText;
-    private String exerciseName, exerciseReps, exerciseSets;
-    private TrainingRepository trainingRepository;
+    private EditText exerciseNameEditText;
+    private NumberPicker setsNumberPicker, repsNumberPicker;
+    private String exerciseName;
+    private int exerciseReps,exerciseSets;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_exercise);
-        trainingRepository = new TrainingRepository(getApplication());
         SetUI();
+        repsNumberPicker.setMinValue(1);
+        repsNumberPicker.setMaxValue(25);
+        setsNumberPicker.setMinValue(1);
+        setsNumberPicker.setMaxValue(15);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
-        setTitle("Add Exercise");
+        Intent intent = getIntent();
+
+        if(intent.hasExtra(EXTRA_EXERCISE_ID)){
+            setTitle("Edit Exercise");
+            exerciseNameEditText.setText(intent.getStringExtra(EXTRA_EXERCISE_NAME));
+            repsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_REPS,1));
+            setsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_SETS,1));
+
+        } else {
+                setTitle("Add Exercise");
+            }
         }
 
     private void saveExercise(){
-        exerciseName = exerciseEditText.getText().toString();
-        exerciseReps = exerciseRepsEditText.getText().toString();
-        exerciseSets = exerciseSetsEditText.getText().toString();
-        if (exerciseName.trim().isEmpty() || exerciseReps.trim().isEmpty() || exerciseSets.trim().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "You did not entered exercise info!", Toast.LENGTH_LONG).show();
+        exerciseName = exerciseNameEditText.getText().toString();
+        exerciseReps = repsNumberPicker.getValue();
+        exerciseSets = setsNumberPicker.getValue();
+        if (exerciseName.trim().isEmpty()) {
+            Toast.makeText(getApplicationContext(), "You did not entered exercise name!", Toast.LENGTH_LONG).show();
             return;
         } else {
             Intent data = new Intent();
             data.putExtra(EXTRA_EXERCISE_NAME,exerciseName);
             data.putExtra(EXTRA_EXERCISE_REPS,exerciseReps);
             data.putExtra(EXTRA_EXERCISE_SETS,exerciseSets);
+
+            long id = getIntent().getLongExtra(EXTRA_EXERCISE_ID,-1);
+            if (id != -1){
+                data.putExtra(EXTRA_EXERCISE_ID,id);
+            }
             setResult(RESULT_OK,data);
             finish();
         }
@@ -77,8 +96,8 @@ public class AddExerciseActivity extends AppCompatActivity {
     }
 
     void SetUI() {
-        exerciseEditText = findViewById(R.id.addExerciseName);
-        exerciseRepsEditText = findViewById(R.id.addExerciseReps);
-        exerciseSetsEditText = findViewById(R.id.addExerciseSets);
+        exerciseNameEditText = findViewById(R.id.addExerciseName);
+        repsNumberPicker = findViewById(R.id.number_picker_reps);
+        setsNumberPicker = findViewById(R.id.number_picker_sets);
     }
 }
