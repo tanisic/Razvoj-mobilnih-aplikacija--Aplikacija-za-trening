@@ -22,10 +22,10 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@drawable/plus"
-        android:backgroundTint="@color/white"
+        android:layout_margin="32dp"
+        android:src="@drawable/ic_add"
         android:contentDescription="@string/add_exercise"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

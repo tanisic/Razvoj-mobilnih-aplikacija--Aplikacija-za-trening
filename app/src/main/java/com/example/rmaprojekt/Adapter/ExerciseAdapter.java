@@ -7,38 +7,46 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rmaprojekt.Entities.Exercise;
-import com.example.rmaprojekt.ExerciseClickInterface;
 import com.example.rmaprojekt.R;
 
-public class ExerciseListAdapter extends ListAdapter<Exercise,ExerciseListAdapter.ExercisesViewHolder>{
+import java.util.ArrayList;
+import java.util.List;
 
-    ExerciseClickInterface exerciseClickInterface;
-    public ExerciseListAdapter(@NonNull DiffUtil.ItemCallback<Exercise> diffCallback, ExerciseClickInterface exerciseClickInterface) {
-        super(diffCallback);
-        this.exerciseClickInterface = exerciseClickInterface;
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ExercisesViewHolder>{
+
+    private List<Exercise> exerciseList = new ArrayList<>();
+
+    public void setExercises(List<Exercise> exercises){
+        this.exerciseList = exercises;
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ExercisesViewHolder(LayoutInflater.from(parent.getContext()).
-                inflate(R.layout.recyclerview_item,parent,false));
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.recyclerview_item,parent,false);
+        return new ExercisesViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ExercisesViewHolder holder, int position) {
-        Exercise exercise = getItem(position);
+        Exercise exercise = exerciseList.get(position);
         holder.bind(exercise);
+    }
+
+    @Override
+    public int getItemCount() {
+        return exerciseList.size();
     }
 
     public class ExercisesViewHolder  extends RecyclerView.ViewHolder {
 
-        private final TextView exerciseItemView, exerciseRepsTextView,
+        private TextView exerciseItemView,
+                exerciseRepsTextView,
                 exerciseSetsTextView;
         private Button deleteExercise;
 
@@ -51,7 +59,7 @@ public class ExerciseListAdapter extends ListAdapter<Exercise,ExerciseListAdapte
             deleteExercise.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    exerciseClickInterface.onDelete(getAdapterPosition());
+
                 }
             });
         }

@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.example.rmaprojekt.R;
 
-public class MainActivity extends AppCompatActivity {
+public class MenuActivity extends AppCompatActivity {
 
     private Button btnRoutines,btnExercises,btnLogs;
 

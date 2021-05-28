@@ -1,6 +1,7 @@
 package com.example.rmaprojekt.Repository;
 
 import android.app.Application;
+import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -15,16 +16,14 @@ import java.util.concurrent.ExecutorService;
 
 public class TrainingRepository {
     private TrainingDao trainingDao;
-    private MutableLiveData<List<Exercise>> allExercises = new MutableLiveData<>();
+    private LiveData<List<Exercise>> allExercises;
 
 
 
     public TrainingRepository(@NonNull Application application){
         TrainingRoomDatabase db = TrainingRoomDatabase.getDatabase(application);
         trainingDao = db.trainingDao();
-        TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
-            allExercises.postValue(trainingDao.getAllExercises());
-        });
+        allExercises = trainingDao.getAllExercises();
     }
 
     public  LiveData<List<Exercise>> getAllExercises() {
@@ -46,6 +45,12 @@ public class TrainingRepository {
     public void deleteExercise(Exercise exercise){
         TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
             trainingDao.deleteExercise(exercise);
+        });
+    }
+
+    public void deleteAllExercises(){
+        TrainingRoomDatabase.databaseWriteExecutor.execute(()->{
+            trainingDao.deleteAllExercises();
         });
     }
 

@@ -1,5 +1,6 @@
 package com.example.rmaprojekt.Dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -34,7 +35,7 @@ public interface TrainingDao {
     public Exercise getExercise(int ID);
 
     @Query("SELECT * FROM exercise ORDER BY exercise_id DESC")
-    public List<Exercise> getAllExercises();
+    public LiveData<List<Exercise>> getAllExercises();
 
     //Routine
     @Insert(onConflict = OnConflictStrategy.IGNORE)

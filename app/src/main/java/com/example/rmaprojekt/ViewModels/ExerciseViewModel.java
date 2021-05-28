@@ -18,23 +18,29 @@ public class ExerciseViewModel extends AndroidViewModel {
     private LiveData<List<Exercise>> allExercises;
 
 
-    public ExerciseViewModel(@NonNull Application application, String mParam) {
+    public ExerciseViewModel(@NonNull Application application) {
         super(application);
-        this.trainingRepository = new TrainingRepository(application);
-        this.allExercises = trainingRepository.getAllExercises();
+        trainingRepository = new TrainingRepository(application);
+        allExercises = trainingRepository.getAllExercises();
     }
 
-    public LiveData<List<Exercise>> getAllExercises(){ return allExercises;}
-
-    public void insertExercise(Exercise exercise){ trainingRepository.insertExercise(exercise);}
-
-    public Exercise getExerciseByPosition(int position){
-        return allExercises.getValue().get(position);
+    public void insert(Exercise exercise){
+        trainingRepository.insertExercise(exercise);
     }
 
-    public void removeExercise(int position){
-        Exercise exercise = getExerciseByPosition(position);
+    public void update(Exercise exercise){
+        trainingRepository.updateExercise(exercise);
+    }
+
+    public void delete(Exercise exercise){
         trainingRepository.deleteExercise(exercise);
-        allExercises.getValue().remove(position);
+    }
+
+    public void deleteAllExercises(){
+        trainingRepository.deleteAllExercises();
+    }
+
+    public LiveData<List<Exercise>> getAllExercises(){
+        return allExercises;
     }
 }
