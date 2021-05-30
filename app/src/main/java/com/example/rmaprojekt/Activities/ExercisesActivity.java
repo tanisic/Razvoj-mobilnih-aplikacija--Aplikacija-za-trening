@@ -54,7 +54,7 @@ public class ExercisesActivity extends AppCompatActivity {
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                exerciseViewModel.delete(exerciseAdapter.getNoteAt(viewHolder.getAdapterPosition()));
+                exerciseViewModel.delete(exerciseAdapter.getExerciseAt(viewHolder.getAdapterPosition()));
                 Toast.makeText(ExercisesActivity.this, "Exercise deleted!",Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);

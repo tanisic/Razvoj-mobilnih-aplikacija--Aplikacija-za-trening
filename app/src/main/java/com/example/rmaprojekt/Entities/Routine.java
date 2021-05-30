@@ -18,4 +18,7 @@ public class Routine {
         this.routineName=routineName;
     }
 
+    public String getRoutineName() {
+        return routineName;
+    }
 }

@@ -24,7 +24,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         notifyDataSetChanged();
     }
 
-    public Exercise getNoteAt(int position) {
+    public Exercise getExerciseAt(int position) {
         return exerciseList.get(position);
     }
 
@@ -32,7 +32,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
     @Override
     public ExercisesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recyclerview_item, parent, false);
+                .inflate(R.layout.recyclerview_item_exercise, parent, false);
         return new ExercisesViewHolder(view);
     }
 

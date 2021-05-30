@@ -11,7 +11,7 @@
         android:text="Exercise name:"
         android:textSize="20dp"></TextView>
     <EditText
-        android:id="@+id/addExerciseName"
+        android:id="@+id/addRoutineName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/min_height"

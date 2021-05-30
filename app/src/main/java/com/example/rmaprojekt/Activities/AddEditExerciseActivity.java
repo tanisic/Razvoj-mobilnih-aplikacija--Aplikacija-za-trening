@@ -96,7 +96,7 @@ public class AddEditExerciseActivity extends AppCompatActivity {
     }
 
     void SetUI() {
-        exerciseNameEditText = findViewById(R.id.addExerciseName);
+        exerciseNameEditText = findViewById(R.id.addRoutineName);
         repsNumberPicker = findViewById(R.id.number_picker_reps);
         setsNumberPicker = findViewById(R.id.number_picker_sets);
     }

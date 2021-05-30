@@ -11,6 +11,7 @@ import androidx.room.Update;
 
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.Routine;
+import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 
 import java.util.List;
@@ -52,7 +53,17 @@ public interface TrainingDao {
 
     //RoutineExercise
     @Transaction
-    @Query("SELECT * FROM routine")
-    List<RoutineWithExercises> getRoutinesWithExercises();
+    @Query("SELECT * FROM RoutineExercise")
+    LiveData<List<RoutineWithExercises>> getRoutinesWithExercises();
 
+    @Transaction
+    @Query("SELECT * FROM routine WHERE routine_id = :routineID")
+    RoutineWithExercises getRoutineWithExercises(long routineID);
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    public void insertRoutineExercise(RoutineExercise crossRef);
+
+    @Transaction
+    @Query("SELECT * FROM routine")
+    LiveData<List<Routine>> getAllRoutines();
 }

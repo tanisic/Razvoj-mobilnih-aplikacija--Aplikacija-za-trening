@@ -11,7 +11,7 @@ import com.example.rmaprojekt.R;
 
 public class MenuActivity extends AppCompatActivity {
 
-    private Button btnRoutines,btnExercises,btnLogs;
+    private Button btnRoutines, btnExercises, btnLogs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,18 +24,27 @@ public class MenuActivity extends AppCompatActivity {
                 exerciseActivity();
             }
         });
+        btnRoutines.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                routineActivity();
+            }
+        });
     }
-    public void setUI(){
+
+    public void setUI() {
         btnRoutines = findViewById(R.id.buttonRoutines);
         btnExercises = findViewById(R.id.buttonExercises);
         btnLogs = findViewById(R.id.buttonLogs);
     }
-    private void exerciseActivity(){
+
+    private void exerciseActivity() {
         Intent intent = new Intent(this, ExercisesActivity.class);
         startActivity(intent);
     }
 
-
-
-
+    private void routineActivity(){
+        Intent intent = new Intent(this, RoutinesActivity.class);
+        startActivity(intent);
     }
+}

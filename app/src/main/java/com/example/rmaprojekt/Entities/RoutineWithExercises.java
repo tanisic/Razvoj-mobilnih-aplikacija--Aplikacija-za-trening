@@ -12,7 +12,8 @@ public class RoutineWithExercises {
 
     @Relation(
             parentColumn = "routine_id",
-            entityColumn = "exercise_id"
+            entityColumn = "exercise_id",
+            associateBy = @Junction(RoutineExercise.class)
     )
     public List<Exercise> exercises;
 
