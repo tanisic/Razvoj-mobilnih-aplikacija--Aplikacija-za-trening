@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.Routine;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 import com.example.rmaprojekt.Repository.TrainingRepository;
@@ -37,5 +38,17 @@ public class RoutineViewModel extends AndroidViewModel {
 
     public LiveData<List<Routine>> getAllRoutines() {
         return allRoutines;
+    }
+
+    public void deleteAllRoutines() {
+        trainingRepository.deleteAllRoutines();
+    }
+
+    public void insert(Routine routine) {
+        trainingRepository.insertRoutine(routine);
+    }
+
+    public void update(Routine routine) {
+        trainingRepository.updateRoutine(routine);
     }
 }

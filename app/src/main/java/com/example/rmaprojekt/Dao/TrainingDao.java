@@ -53,7 +53,7 @@ public interface TrainingDao {
 
     //RoutineExercise
     @Transaction
-    @Query("SELECT * FROM RoutineExercise")
+    @Query("SELECT * FROM routine")
     LiveData<List<RoutineWithExercises>> getRoutinesWithExercises();
 
     @Transaction
@@ -66,4 +66,7 @@ public interface TrainingDao {
     @Transaction
     @Query("SELECT * FROM routine")
     LiveData<List<Routine>> getAllRoutines();
+
+    @Query("DELETE FROM routine")
+    void deleteAllRoutines();
 }

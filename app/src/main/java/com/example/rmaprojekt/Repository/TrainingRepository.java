@@ -84,4 +84,10 @@ public class TrainingRepository {
     public RoutineWithExercises getRoutineWithExercises(long routineID){
         return trainingDao.getRoutineWithExercises(routineID);
     }
+
+    public void deleteAllRoutines() {
+        TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
+            trainingDao.deleteAllRoutines();
+        });
+    }
 }

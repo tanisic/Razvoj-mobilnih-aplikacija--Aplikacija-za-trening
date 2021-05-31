@@ -21,4 +21,12 @@ public class Routine {
     public String getRoutineName() {
         return routineName;
     }
+
+    public long getID() {
+        return routineID;
+    }
+
+    public void setID(long id) {
+        this.routineID=id;
+    }
 }
