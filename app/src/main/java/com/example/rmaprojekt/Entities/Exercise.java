@@ -9,21 +9,29 @@ import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
-@Entity(tableName="exercise")
+@Entity(tableName = "exercise")
 public class Exercise {
 
+    public static DiffUtil.ItemCallback<Exercise> itemCallback = new DiffUtil.ItemCallback<Exercise>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
+            return oldItem.getID() == newItem.getID();
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
     @PrimaryKey(autoGenerate = true)
     @NonNull
-    @ColumnInfo(name="exercise_id")
+    @ColumnInfo(name = "exercise_id")
     public long exerciseID;
-
     @ColumnInfo(name = "exercise_name")
     public String exerciseName;
-
-    @ColumnInfo(name="exercise_reps")
+    @ColumnInfo(name = "exercise_reps")
     public int reps;
-
-    @ColumnInfo(name="exercise_sets")
+    @ColumnInfo(name = "exercise_sets")
     public int sets;
 
     public Exercise(String exerciseName, int reps, int sets) {
@@ -32,15 +40,15 @@ public class Exercise {
         this.sets = sets;
     }
 
-    public void setID(long exerciseID) {
-        this.exerciseID = exerciseID;
-    }
-
     public long getID() {
         return exerciseID;
     }
 
-    public String getName(){
+    public void setID(long exerciseID) {
+        this.exerciseID = exerciseID;
+    }
+
+    public String getName() {
         return this.exerciseName;
     }
 
@@ -67,16 +75,4 @@ public class Exercise {
     public int hashCode() {
         return Objects.hash(exerciseID, exerciseName, reps, sets);
     }
-
-    public static DiffUtil.ItemCallback<Exercise> itemCallback = new DiffUtil.ItemCallback<Exercise>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
-            return oldItem.getID() == newItem.getID();
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull Exercise oldItem, @NonNull Exercise newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
 }

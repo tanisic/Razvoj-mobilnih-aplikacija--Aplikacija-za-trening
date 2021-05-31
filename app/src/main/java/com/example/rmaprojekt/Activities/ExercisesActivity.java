@@ -1,13 +1,5 @@
 package com.example.rmaprojekt.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.ItemTouchHelper;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +7,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rmaprojekt.Adapter.ExerciseAdapter;
 import com.example.rmaprojekt.Entities.Exercise;
@@ -25,12 +25,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.List;
 
 public class ExercisesActivity extends AppCompatActivity {
+    public static final int ADD_EXERCISE_REQUEST = 1;
+    public static final int EDIT_EXERCISE_REQUEST = 2;
     private RecyclerView recyclerView;
     private FloatingActionButton addExerciseFab;
     private ExerciseViewModel exerciseViewModel;
     private ExerciseAdapter exerciseAdapter;
-    public static final int ADD_EXERCISE_REQUEST = 1;
-    public static final int EDIT_EXERCISE_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,7 @@ public class ExercisesActivity extends AppCompatActivity {
                 exerciseAdapter.setExercises(exercises);
             }
         });
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -55,7 +55,7 @@ public class ExercisesActivity extends AppCompatActivity {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 exerciseViewModel.delete(exerciseAdapter.getExerciseAt(viewHolder.getAdapterPosition()));
-                Toast.makeText(ExercisesActivity.this, "Exercise deleted!",Toast.LENGTH_LONG).show();
+                Toast.makeText(ExercisesActivity.this, "Exercise deleted!", Toast.LENGTH_LONG).show();
             }
         }).attachToRecyclerView(recyclerView);
 
@@ -63,11 +63,11 @@ public class ExercisesActivity extends AppCompatActivity {
             @Override
             public void onExerciseClick(Exercise exercise) {
                 Intent intent = new Intent(ExercisesActivity.this, AddEditExerciseActivity.class);
-                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME,exercise.getName());
-                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,exercise.getReps());
-                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,exercise.getSets());
-                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID,exercise.getID());
-                startActivityForResult(intent,EDIT_EXERCISE_REQUEST);
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME, exercise.getName());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, exercise.getReps());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, exercise.getSets());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID, exercise.getID());
+                startActivityForResult(intent, EDIT_EXERCISE_REQUEST);
             }
         });
 
@@ -96,24 +96,24 @@ public class ExercisesActivity extends AppCompatActivity {
 
         if (requestCode == ADD_EXERCISE_REQUEST && resultCode == RESULT_OK) {
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
-            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,1);
-            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,1);
+            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
+            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
             Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets);
             exerciseViewModel.insert(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise saved", Toast.LENGTH_SHORT).show();
 
-        }else if (requestCode == EDIT_EXERCISE_REQUEST && resultCode == RESULT_OK){
-            long id = data.getLongExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID,-1);
+        } else if (requestCode == EDIT_EXERCISE_REQUEST && resultCode == RESULT_OK) {
+            long id = data.getLongExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID, -1);
 
-            if (id == -1){
-                Toast.makeText(ExercisesActivity.this,"Exercise can't be updated",Toast.LENGTH_SHORT).show();
+            if (id == -1) {
+                Toast.makeText(ExercisesActivity.this, "Exercise can't be updated", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
-            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS,1);
-            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS,1);
-            Exercise exercise = new Exercise(exerciseName,Integer.valueOf(exerciseReps),Integer.valueOf(exerciseSets));
+            int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
+            int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
+            Exercise exercise = new Exercise(exerciseName, Integer.valueOf(exerciseReps), Integer.valueOf(exerciseSets));
             exercise.setID(id);
             exerciseViewModel.update(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise updated", Toast.LENGTH_SHORT).show();
@@ -126,16 +126,16 @@ public class ExercisesActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.exercises_menu,menu);
+        menuInflater.inflate(R.menu.exercises_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.delete_all_exercises:
                 exerciseViewModel.deleteAllExercises();
-                Toast.makeText(this,"All exercises deleted", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "All exercises deleted", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

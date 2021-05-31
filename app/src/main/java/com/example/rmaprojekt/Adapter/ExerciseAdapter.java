@@ -47,11 +47,19 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
         return exerciseList.size();
     }
 
+    public void setOnExerciseClickListener(OnExerciseClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnExerciseClickListener {
+        void onExerciseClick(Exercise exercise);
+    }
+
     public class ExercisesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView exerciseItemView,
-                exerciseRepsTextView,
-                exerciseSetsTextView;
+        private final TextView exerciseItemView;
+        private final TextView exerciseRepsTextView;
+        private final TextView exerciseSetsTextView;
 
 
         private ExercisesViewHolder(View itemView) {
@@ -73,18 +81,10 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.Exerci
 
         public void bind(Exercise exercise) {
             exerciseItemView.setText(exercise.getName());
-            exerciseRepsTextView.setText("Reps: " + Integer.toString(exercise.getReps()));
-            exerciseSetsTextView.setText("Sets: " + Integer.toString(exercise.getSets()));
+            exerciseRepsTextView.setText("Reps: " + exercise.getReps());
+            exerciseSetsTextView.setText("Sets: " + exercise.getSets());
         }
 
-    }
-
-    public interface OnExerciseClickListener {
-        void onExerciseClick(Exercise exercise);
-    }
-
-    public void setOnExerciseClickListener(OnExerciseClickListener listener) {
-        this.listener = listener;
     }
 
 }

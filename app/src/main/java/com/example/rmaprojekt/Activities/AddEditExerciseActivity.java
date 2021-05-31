@@ -1,8 +1,5 @@
 package com.example.rmaprojekt.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +8,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.rmaprojekt.R;
 
@@ -28,7 +28,7 @@ public class AddEditExerciseActivity extends AppCompatActivity {
     private EditText exerciseNameEditText;
     private NumberPicker setsNumberPicker, repsNumberPicker;
     private String exerciseName;
-    private int exerciseReps,exerciseSets;
+    private int exerciseReps, exerciseSets;
 
 
     @Override
@@ -43,18 +43,18 @@ public class AddEditExerciseActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         Intent intent = getIntent();
 
-        if(intent.hasExtra(EXTRA_EXERCISE_ID)){
+        if (intent.hasExtra(EXTRA_EXERCISE_ID)) {
             setTitle("Edit Exercise");
             exerciseNameEditText.setText(intent.getStringExtra(EXTRA_EXERCISE_NAME));
-            repsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_REPS,1));
-            setsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_SETS,1));
+            repsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_REPS, 1));
+            setsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_SETS, 1));
 
         } else {
-                setTitle("Add Exercise");
-            }
+            setTitle("Add Exercise");
         }
+    }
 
-    private void saveExercise(){
+    private void saveExercise() {
         exerciseName = exerciseNameEditText.getText().toString();
         exerciseReps = repsNumberPicker.getValue();
         exerciseSets = setsNumberPicker.getValue();
@@ -63,15 +63,15 @@ public class AddEditExerciseActivity extends AppCompatActivity {
             return;
         } else {
             Intent data = new Intent();
-            data.putExtra(EXTRA_EXERCISE_NAME,exerciseName);
-            data.putExtra(EXTRA_EXERCISE_REPS,exerciseReps);
-            data.putExtra(EXTRA_EXERCISE_SETS,exerciseSets);
+            data.putExtra(EXTRA_EXERCISE_NAME, exerciseName);
+            data.putExtra(EXTRA_EXERCISE_REPS, exerciseReps);
+            data.putExtra(EXTRA_EXERCISE_SETS, exerciseSets);
 
-            long id = getIntent().getLongExtra(EXTRA_EXERCISE_ID,-1);
-            if (id != -1){
-                data.putExtra(EXTRA_EXERCISE_ID,id);
+            long id = getIntent().getLongExtra(EXTRA_EXERCISE_ID, -1);
+            if (id != -1) {
+                data.putExtra(EXTRA_EXERCISE_ID, id);
             }
-            setResult(RESULT_OK,data);
+            setResult(RESULT_OK, data);
             finish();
         }
     }

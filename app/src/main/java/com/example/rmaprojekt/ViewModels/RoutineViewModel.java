@@ -6,17 +6,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.Routine;
-import com.example.rmaprojekt.Entities.RoutineWithExercises;
 import com.example.rmaprojekt.Repository.TrainingRepository;
 
 import java.util.List;
 
 public class RoutineViewModel extends AndroidViewModel {
 
-    private TrainingRepository trainingRepository;
-    private LiveData<List<Routine>> allRoutines;
+    private final TrainingRepository trainingRepository;
+    private final LiveData<List<Routine>> allRoutines;
 
     public RoutineViewModel(@NonNull Application application) {
         super(application);

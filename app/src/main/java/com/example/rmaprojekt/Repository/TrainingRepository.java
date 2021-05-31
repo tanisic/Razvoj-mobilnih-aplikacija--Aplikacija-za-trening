@@ -1,11 +1,9 @@
 package com.example.rmaprojekt.Repository;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.rmaprojekt.Dao.TrainingDao;
 import com.example.rmaprojekt.Database.TrainingRoomDatabase;
@@ -14,13 +12,12 @@ import com.example.rmaprojekt.Entities.Routine;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
 
 public class TrainingRepository {
 
-    private TrainingDao trainingDao;
-    private LiveData<List<Exercise>> allExercises;
-    private LiveData<List<Routine>> allRoutines;
+    private final TrainingDao trainingDao;
+    private final LiveData<List<Exercise>> allExercises;
+    private final LiveData<List<Routine>> allRoutines;
 
 
     public TrainingRepository(@NonNull Application application) {
@@ -81,7 +78,7 @@ public class TrainingRepository {
         return allRoutines;
     }
 
-    public RoutineWithExercises getRoutineWithExercises(long routineID){
+    public RoutineWithExercises getRoutineWithExercises(long routineID) {
         return trainingDao.getRoutineWithExercises(routineID);
     }
 

@@ -24,26 +24,12 @@ import java.util.concurrent.Executors;
 public abstract class TrainingRoomDatabase extends RoomDatabase {
 
 
-    public abstract TrainingDao trainingDao();
-    private static volatile TrainingRoomDatabase INSTANCE;
-    private static final String DB_NAME = "training_db";
     public static final int NUMBER_OF_THREADS = 4;
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-
-    public static TrainingRoomDatabase getDatabase(final Context context){
-        if (INSTANCE == null){
-            synchronized (TrainingRoomDatabase.class){
-                if (INSTANCE == null){
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            TrainingRoomDatabase.class,DB_NAME)
-                            .build();
-                }
-            }
-        }
-        return INSTANCE;
-    }
-    private static RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
+    private static final String DB_NAME = "training_db";
+    private static volatile TrainingRoomDatabase INSTANCE;
+    private static final RoomDatabase.Callback sRoomDatabaseCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
@@ -59,4 +45,19 @@ public abstract class TrainingRoomDatabase extends RoomDatabase {
             });
         }
     };
+
+    public static TrainingRoomDatabase getDatabase(final Context context) {
+        if (INSTANCE == null) {
+            synchronized (TrainingRoomDatabase.class) {
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
+                            TrainingRoomDatabase.class, DB_NAME)
+                            .build();
+                }
+            }
+        }
+        return INSTANCE;
+    }
+
+    public abstract TrainingDao trainingDao();
 }

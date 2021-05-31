@@ -47,9 +47,17 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         return routineList.size();
     }
 
+    public void setOnRoutineClickListener(OnRoutineClickListener listener) {
+        this.listener = listener;
+    }
+
+    public interface OnRoutineClickListener {
+        void onRoutineClick(Routine routine);
+    }
+
     public class RoutineViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView routineNameTextView;
+        private final TextView routineNameTextView;
 
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,11 +67,5 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         public void bind(Routine routine) {
             routineNameTextView.setText(routine.getRoutineName());
         }
-    }
-    public interface OnRoutineClickListener{
-        void onRoutineClick(Routine routine);
-    }
-    public void setOnRoutineClickListener(OnRoutineClickListener listener){
-        this.listener=listener;
     }
 }

@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Repository.TrainingRepository;
@@ -14,8 +13,8 @@ import java.util.List;
 
 public class ExerciseViewModel extends AndroidViewModel {
 
-    private TrainingRepository trainingRepository;
-    private LiveData<List<Exercise>> allExercises;
+    private final TrainingRepository trainingRepository;
+    private final LiveData<List<Exercise>> allExercises;
 
 
     public ExerciseViewModel(@NonNull Application application) {
@@ -24,23 +23,23 @@ public class ExerciseViewModel extends AndroidViewModel {
         allExercises = trainingRepository.getAllExercises();
     }
 
-    public void insert(Exercise exercise){
+    public void insert(Exercise exercise) {
         trainingRepository.insertExercise(exercise);
     }
 
-    public void update(Exercise exercise){
+    public void update(Exercise exercise) {
         trainingRepository.updateExercise(exercise);
     }
 
-    public void delete(Exercise exercise){
+    public void delete(Exercise exercise) {
         trainingRepository.deleteExercise(exercise);
     }
 
-    public void deleteAllExercises(){
+    public void deleteAllExercises() {
         trainingRepository.deleteAllExercises();
     }
 
-    public LiveData<List<Exercise>> getAllExercises(){
+    public LiveData<List<Exercise>> getAllExercises() {
         return allExercises;
     }
 }

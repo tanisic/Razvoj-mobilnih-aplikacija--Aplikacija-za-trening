@@ -1,10 +1,5 @@
 package com.example.rmaprojekt.Activities;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +7,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 import com.example.rmaprojekt.R;
@@ -41,16 +41,16 @@ public class AddEditRoutineActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         Intent intent = getIntent();
 
-        if(intent.hasExtra(EXTRA_ROUTINE_ID)){
+        if (intent.hasExtra(EXTRA_ROUTINE_ID)) {
             setTitle("Edit Routine");
-            routineID = intent.getLongExtra(EXTRA_ROUTINE_ID,1);
+            routineID = intent.getLongExtra(EXTRA_ROUTINE_ID, 1);
             routineWithExercises = routineWithExercisesViewModel.getRoutineWithExercises(routineID);
-        }else{
+        } else {
             setTitle("Add Routine");
         }
     }
 
-    private void SetupUI(){
+    private void SetupUI() {
         routineNameEditText = findViewById(R.id.addRoutineName);
         recyclerViewRoutineWithExercises = findViewById(R.id.recyclerview_RoutineWithExercises);
 
@@ -82,14 +82,14 @@ public class AddEditRoutineActivity extends AppCompatActivity {
             return;
         } else {
             Intent data = new Intent();
-            data.putExtra(EXTRA_ROUTINE_NAME,routineName);
+            data.putExtra(EXTRA_ROUTINE_NAME, routineName);
             // dodati još "checkabilni recyclerview"
 
-            long id = getIntent().getLongExtra(EXTRA_ROUTINE_ID,-1);
-            if (id != -1){
-                data.putExtra(EXTRA_ROUTINE_ID,id);
+            long id = getIntent().getLongExtra(EXTRA_ROUTINE_ID, -1);
+            if (id != -1) {
+                data.putExtra(EXTRA_ROUTINE_ID, id);
             }
-            setResult(RESULT_OK,data);
+            setResult(RESULT_OK, data);
             finish();
         }
     }
