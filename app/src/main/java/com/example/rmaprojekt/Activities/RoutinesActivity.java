@@ -18,8 +18,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rmaprojekt.Adapter.RoutineAdapter;
+import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.Routine;
 import com.example.rmaprojekt.Entities.RoutineExercise;
+import com.example.rmaprojekt.Entities.RoutineWithExercises;
 import com.example.rmaprojekt.R;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
 import com.example.rmaprojekt.ViewModels.RoutineViewModel;
@@ -58,11 +60,22 @@ public class RoutinesActivity extends AppCompatActivity {
         adapter.setOnRoutineClickListener(new RoutineAdapter.OnRoutineClickListener() {
             @Override
             public void onRoutineClick(Routine routine) {
+                Log.d("NExt", "onroutineclick");
                 Intent intent = new Intent(RoutinesActivity.this, AddEditRoutineActivity.class);
-                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_ID, (long) routine.getID());
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_ID, routine.getID());
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME, routine.getRoutineName());
+                RoutineWithExercises routineWithExercises = routineViewModel.getRoutineWithExercises(routine.getID());
+                List<Exercise> selectedExercises = routineWithExercises.exercises;
+                StringBuilder stringBuilder = new StringBuilder();
+
+                for( Exercise exercise : selectedExercises){
+                    stringBuilder.append(exercise.getID()+" ");
+                }
+                intent.putExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS,stringBuilder.toString());
                 startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
             }
         });
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,8 +121,6 @@ public class RoutinesActivity extends AppCompatActivity {
                 routineViewModel.insertRoutineExercise(routineExercise);
                 i++;
             }
-
-
             Toast.makeText(RoutinesActivity.this, "Routine saved", Toast.LENGTH_SHORT).show();
 
         } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == RESULT_OK) {
@@ -123,7 +134,19 @@ public class RoutinesActivity extends AppCompatActivity {
             String routineName = data.getStringExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME);
             Routine routine = new Routine(routineName);
             routine.setID(id);
+            String[] exerciseIdsString = data.getStringExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS)
+                    .trim().split("\\s+");
+            long[] exerciseIds = new long[exerciseIdsString.length];
+            int i = 0;
+            Log.d("exercise IDS", exerciseIds.toString());
             routineViewModel.update(routine);
+            routineViewModel.deleteCrossRef(id);
+            for (String string : exerciseIdsString) {
+                exerciseIds[i] = Long.parseLong(string);
+                RoutineExercise routineExercise = new RoutineExercise(id, exerciseIds[i]);
+                routineViewModel.insertRoutineExercise(routineExercise);
+                i++;
+            }
             //exerciseViewModel.updateRoutineWithExercises(id,exerciseList);
             Toast.makeText(RoutinesActivity.this, "Routine updated", Toast.LENGTH_SHORT).show();
 
@@ -144,6 +167,7 @@ public class RoutinesActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.delete_all_routines:
                 routineViewModel.deleteAllRoutines();
+                routineViewModel.deleteAllCrossRef();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

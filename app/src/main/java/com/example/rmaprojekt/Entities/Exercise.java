@@ -37,6 +37,10 @@ public class Exercise {
     @Ignore
     public boolean isSelected = false;
 
+    public Exercise() {
+
+    }
+
     public boolean isSelected() {
         return isSelected;
     }

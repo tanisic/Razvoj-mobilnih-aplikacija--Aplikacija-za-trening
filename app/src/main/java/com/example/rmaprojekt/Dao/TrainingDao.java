@@ -33,7 +33,7 @@ public interface TrainingDao {
     void deleteAllExercises();
 
     @Query("SELECT * FROM exercise WHERE exercise_id = :ID")
-    Exercise getExercise(int ID);
+    Exercise getExercise(long ID);
 
     @Query("SELECT * FROM exercise ORDER BY exercise_id DESC")
     LiveData<List<Exercise>> getAllExercises();
@@ -66,6 +66,10 @@ public interface TrainingDao {
     @Transaction
     @Query("DELETE FROM RoutineExercise WHERE routine_id = :routineID")
     void deleteCrossRef(long routineID);
+
+    @Transaction
+    @Query("DELETE FROM RoutineExercise")
+    void deleteAllCrossRef();
 
     @Transaction
     @Query("SELECT * FROM routine")

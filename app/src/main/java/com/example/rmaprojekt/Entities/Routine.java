@@ -19,6 +19,10 @@ public class Routine {
         this.routineName = routineName;
     }
 
+    public Routine() {
+
+    }
+
     public String getRoutineName() {
         return routineName;
     }

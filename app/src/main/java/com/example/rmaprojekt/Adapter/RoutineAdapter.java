@@ -62,6 +62,15 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         public RoutineViewHolder(@NonNull View itemView) {
             super(itemView);
             routineNameTextView = itemView.findViewById(R.id.routineNameTextView);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    if(listener !=null && position != RecyclerView.NO_POSITION){
+                        listener.onRoutineClick(routineList.get(position));
+                    }
+                }
+            });
         }
 
         public void bind(Routine routine) {

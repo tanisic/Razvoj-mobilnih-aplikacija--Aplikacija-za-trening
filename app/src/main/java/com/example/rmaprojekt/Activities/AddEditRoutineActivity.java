@@ -25,7 +25,9 @@ import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.ExercisesInRoutineListener;
 import com.example.rmaprojekt.R;
 import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
+import com.example.rmaprojekt.ViewModels.RoutineViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddEditRoutineActivity extends AppCompatActivity implements ExercisesInRoutineListener {
@@ -37,6 +39,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
     public static final String EXTRA_EXERCISES_IDS =
             "com.example.rmaprojekt.Activities.ADD_EXERCISES_IDS";
 
+
     private Button updateExercisesBTN;
     private EditText routineNameEditText;
     private String routineName;
@@ -44,6 +47,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
     private long routineID;
     List<Exercise> selectedExercises;
     private ExerciseViewModel exerciseViewModel;
+    private RoutineViewModel routineViewModel;
     private ExercisesInRoutineAdapter adapter;
 
     @Override
@@ -56,6 +60,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
         recyclerView.setHasFixedSize(true);
 
         exerciseViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
+        routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
         adapter = new ExercisesInRoutineAdapter(this);
         recyclerView.setAdapter(adapter);
         exerciseViewModel.getAllExercises().observe(this, new Observer<List<Exercise>>() {
@@ -76,7 +81,26 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
         if (intent.hasExtra(EXTRA_ROUTINE_ID)) {
             setTitle("Edit Routine");
             routineID = intent.getLongExtra(EXTRA_ROUTINE_ID, 1);
+            routineName = intent.getStringExtra(EXTRA_ROUTINE_NAME);
+            routineNameEditText.setText(routineName);
+            String[] exerciseIdsString = intent.getStringExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS)
+                    .trim().split("\\s+");
+            if(exerciseIdsString.length > 0) {
+            long[] exerciseIDS = new long[exerciseIdsString.length];
+            int i = 0;
+            selectedExercises = new ArrayList<Exercise>();
+                for (String string : exerciseIdsString) {
+                    try {
+                        exerciseIDS[i] = Long.valueOf(string);
+                    }catch (NumberFormatException e){ e.printStackTrace();}
 
+                    selectedExercises.add(exerciseViewModel.getExerciseByID(exerciseIDS[i]));
+                    i++;
+                }
+            }
+            else{
+                return;
+            }
         } else {
             setTitle("Add Routine");
         }

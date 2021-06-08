@@ -111,7 +111,24 @@ public class TrainingRepository {
     }
 
     public RoutineWithExercises getRoutineWithExercises(long routineID) {
-        return trainingDao.getRoutineWithExercises(routineID);
+
+        Callable<RoutineWithExercises>  routineWithExercisesData = new Callable<RoutineWithExercises>(){
+            @Override
+            public RoutineWithExercises call() throws Exception {
+                return trainingDao.getRoutineWithExercises(routineID);
+            }
+        };
+        Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(routineWithExercisesData);
+        RoutineWithExercises result = new RoutineWithExercises();
+        try {
+            result = (RoutineWithExercises)future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return result;
     }
     public void insertExerciseIntoRoutine(RoutineExercise crossref){
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
@@ -123,8 +140,47 @@ public class TrainingRepository {
             trainingDao.deleteAllRoutines();
         });
     }
-
+    public void deleteAllCrossRef(){
+        TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
+            trainingDao.deleteAllCrossRef();
+        });
+    }
     public Routine getRoutine(long id) {
-        return trainingDao.getRoutine(id);
+        Callable<Routine> value = new Callable<Routine>() {
+            @Override
+            public Routine call() throws Exception {
+                return trainingDao.getRoutine(id);
+            }
+        };
+        Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
+        Routine result = new Routine();
+        try {
+            result = (Routine)future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Exercise getExerciseByID(long exerciseID) {
+        Callable<Exercise> value = new Callable<Exercise>() {
+            @Override
+            public Exercise call() throws Exception {
+                return trainingDao.getExercise(exerciseID);
+            }
+        };
+        Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
+        Exercise result = new Exercise();
+        try {
+            result = (Exercise)future.get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return result;
+
     }
 }
