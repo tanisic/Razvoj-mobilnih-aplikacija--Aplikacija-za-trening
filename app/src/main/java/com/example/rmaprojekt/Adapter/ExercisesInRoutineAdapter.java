@@ -25,13 +25,15 @@ public class ExercisesInRoutineAdapter extends RecyclerView.Adapter<ExercisesInR
     private ExercisesInRoutineListener listener;
     private Context context;
 
+    public ExercisesInRoutineAdapter(ExercisesInRoutineListener listener) {
+        this.listener = listener;
+    }
+
     public void setExercises(List<Exercise> exercises) {
         this.exerciseList = exercises;
         notifyDataSetChanged();
     }
-    public ExercisesInRoutineAdapter(ExercisesInRoutineListener listener){
-        this.listener=listener;
-    }
+
     @NonNull
     @Override
     public ExercisesInRoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -84,20 +86,20 @@ public class ExercisesInRoutineAdapter extends RecyclerView.Adapter<ExercisesInR
                 public void onClick(View v) {
 
                     int position = getAdapterPosition();
-                    Log.d("layout click","layout clicked "+ position);
+                    Log.d("layout click", "layout clicked " + position);
 
                     Exercise exercise = exerciseList.get(position);
                     exercise.isSelected = !exercise.isSelected;
                     if (listener != null && position != RecyclerView.NO_POSITION) {
-                        Log.d("layout click","listener != null "+ position);
+                        Log.d("layout click", "listener != null " + position);
                         if (exercise.isSelected) {
-                            Log.d("layout click","exercise is not selected "+ position);
+                            Log.d("layout click", "exercise is not selected " + position);
                             imageSelected.setVisibility(View.GONE);
                             exercise.isSelected = false;
                             if (getSelectedExercises().size() == 0) {
                                 listener.onExerciseInRoutineAction(false);
                             } else {
-                                Log.d("layout click","exercise is selected "+ position);
+                                Log.d("layout click", "exercise is selected " + position);
                                 imageSelected.setVisibility(View.VISIBLE);
                                 exercise.isSelected = true;
                                 listener.onExerciseInRoutineAction(true);

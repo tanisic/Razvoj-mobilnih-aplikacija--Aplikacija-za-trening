@@ -44,16 +44,18 @@ public class RoutineViewModel extends AndroidViewModel {
         trainingRepository.deleteCrossRef(routineID);
     }
 
-    public void deleteAllCrossRef(){
+    public void deleteAllCrossRef() {
         trainingRepository.deleteAllCrossRef();
     }
 
     public void insertRoutineExercise(RoutineExercise routineExercise) {
         trainingRepository.insertExerciseIntoRoutine(routineExercise);
     }
-    public RoutineWithExercises getRoutineWithExercises(long routineID){
+
+    public RoutineWithExercises getRoutineWithExercises(long routineID) {
         return trainingRepository.getRoutineWithExercises(routineID);
     }
+
     public void update(Routine routine) {
         trainingRepository.updateRoutine(routine);
     }

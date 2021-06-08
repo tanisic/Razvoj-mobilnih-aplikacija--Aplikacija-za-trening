@@ -66,7 +66,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    if(listener !=null && position != RecyclerView.NO_POSITION){
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
                         listener.onRoutineClick(routineList.get(position));
                     }
                 }

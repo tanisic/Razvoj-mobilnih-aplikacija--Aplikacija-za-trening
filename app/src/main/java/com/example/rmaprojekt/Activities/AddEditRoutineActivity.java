@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,14 +37,12 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
             "com.example.rmaprojekt.Activities.ADD_ROUTINE_ID";
     public static final String EXTRA_EXERCISES_IDS =
             "com.example.rmaprojekt.Activities.ADD_EXERCISES_IDS";
-
-
+    List<Exercise> selectedExercises;
     private Button updateExercisesBTN;
     private EditText routineNameEditText;
     private String routineName;
     private RecyclerView recyclerView;
     private long routineID;
-    List<Exercise> selectedExercises;
     private ExerciseViewModel exerciseViewModel;
     private RoutineViewModel routineViewModel;
     private ExercisesInRoutineAdapter adapter;
@@ -85,20 +82,21 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
             routineNameEditText.setText(routineName);
             String[] exerciseIdsString = intent.getStringExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS)
                     .trim().split("\\s+");
-            if(exerciseIdsString.length > 0) {
-            long[] exerciseIDS = new long[exerciseIdsString.length];
-            int i = 0;
-            selectedExercises = new ArrayList<Exercise>();
+            if (exerciseIdsString.length > 0) {
+                long[] exerciseIDS = new long[exerciseIdsString.length];
+                int i = 0;
+                selectedExercises = new ArrayList<Exercise>();
                 for (String string : exerciseIdsString) {
                     try {
                         exerciseIDS[i] = Long.valueOf(string);
-                    }catch (NumberFormatException e){ e.printStackTrace();}
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
 
                     selectedExercises.add(exerciseViewModel.getExerciseByID(exerciseIDS[i]));
                     i++;
                 }
-            }
-            else{
+            } else {
                 return;
             }
         } else {
@@ -147,7 +145,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
             for (Exercise exercise : selectedExercises) {
                 exerciseIds.append(exercise.getID() + " ");
             }
-            Log.d("IDS",exerciseIds.toString());
+            Log.d("IDS", exerciseIds.toString());
             data.putExtra(EXTRA_EXERCISES_IDS, exerciseIds.toString());
             if (id != -1) {
                 data.putExtra(EXTRA_ROUTINE_ID, id);

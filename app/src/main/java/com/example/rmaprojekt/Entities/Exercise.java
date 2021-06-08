@@ -41,18 +41,18 @@ public class Exercise {
 
     }
 
+    public Exercise(String exerciseName, int reps, int sets) {
+        this.exerciseName = exerciseName;
+        this.reps = reps;
+        this.sets = sets;
+    }
+
     public boolean isSelected() {
         return isSelected;
     }
 
     public void setSelected(boolean selected) {
         isSelected = selected;
-    }
-
-    public Exercise(String exerciseName, int reps, int sets) {
-        this.exerciseName = exerciseName;
-        this.reps = reps;
-        this.sets = sets;
     }
 
     public long getID() {

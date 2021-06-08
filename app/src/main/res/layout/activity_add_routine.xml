@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context=".Activities.AddEditRoutineActivity"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    tools:context=".Activities.AddEditRoutineActivity">
 
     <EditText
         android:id="@+id/addRoutineName"

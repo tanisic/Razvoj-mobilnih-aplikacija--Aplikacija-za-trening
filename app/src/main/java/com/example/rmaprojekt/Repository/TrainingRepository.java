@@ -13,7 +13,6 @@ import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 
 import java.util.List;
-import java.util.Observable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -64,24 +63,25 @@ public class TrainingRepository {
     public long insertRoutine(Routine routine) {
 
 
-            Callable<Long> value = new Callable<Long>() {
-                @Override
-                public Long call() throws Exception {
-                    return trainingDao.insertRoutine(routine);
-                }
-            };
-            Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
-            Long result = new Long(1);
-            try {
-              result = Long.valueOf((Long)future.get());
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        Callable<Long> value = new Callable<Long>() {
+            @Override
+            public Long call() throws Exception {
+                return trainingDao.insertRoutine(routine);
             }
+        };
+        Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
+        Long result = new Long(1);
+        try {
+            result = Long.valueOf((Long) future.get());
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return result;
     }
+
     public void deleteCrossRef(long routineID) {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.deleteCrossRef(routineID);
@@ -100,19 +100,20 @@ public class TrainingRepository {
         });
     }
 
-    public void deleteExercisesFromRoutine(long ID){
+    public void deleteExercisesFromRoutine(long ID) {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.deleteExercisesFromRoutine(ID);
         });
 
     }
+
     public LiveData<List<Routine>> getAllRoutines() {
         return allRoutines;
     }
 
     public RoutineWithExercises getRoutineWithExercises(long routineID) {
 
-        Callable<RoutineWithExercises>  routineWithExercisesData = new Callable<RoutineWithExercises>(){
+        Callable<RoutineWithExercises> routineWithExercisesData = new Callable<RoutineWithExercises>() {
             @Override
             public RoutineWithExercises call() throws Exception {
                 return trainingDao.getRoutineWithExercises(routineID);
@@ -121,7 +122,7 @@ public class TrainingRepository {
         Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(routineWithExercisesData);
         RoutineWithExercises result = new RoutineWithExercises();
         try {
-            result = (RoutineWithExercises)future.get();
+            result = (RoutineWithExercises) future.get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -130,21 +131,25 @@ public class TrainingRepository {
 
         return result;
     }
-    public void insertExerciseIntoRoutine(RoutineExercise crossref){
+
+    public void insertExerciseIntoRoutine(RoutineExercise crossref) {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.insertRoutineExercise(crossref);
         });
     }
+
     public void deleteAllRoutines() {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.deleteAllRoutines();
         });
     }
-    public void deleteAllCrossRef(){
+
+    public void deleteAllCrossRef() {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.deleteAllCrossRef();
         });
     }
+
     public Routine getRoutine(long id) {
         Callable<Routine> value = new Callable<Routine>() {
             @Override
@@ -155,7 +160,7 @@ public class TrainingRepository {
         Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
         Routine result = new Routine();
         try {
-            result = (Routine)future.get();
+            result = (Routine) future.get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {
@@ -174,7 +179,7 @@ public class TrainingRepository {
         Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
         Exercise result = new Exercise();
         try {
-            result = (Exercise)future.get();
+            result = (Exercise) future.get();
         } catch (ExecutionException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

@@ -68,10 +68,10 @@ public class RoutinesActivity extends AppCompatActivity {
                 List<Exercise> selectedExercises = routineWithExercises.exercises;
                 StringBuilder stringBuilder = new StringBuilder();
 
-                for( Exercise exercise : selectedExercises){
-                    stringBuilder.append(exercise.getID()+" ");
+                for (Exercise exercise : selectedExercises) {
+                    stringBuilder.append(exercise.getID() + " ");
                 }
-                intent.putExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS,stringBuilder.toString());
+                intent.putExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS, stringBuilder.toString());
                 startActivityForResult(intent, EDIT_ROUTINE_REQUEST);
             }
         });
