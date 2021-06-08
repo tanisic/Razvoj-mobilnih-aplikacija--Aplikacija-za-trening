@@ -9,9 +9,14 @@ import com.example.rmaprojekt.Dao.TrainingDao;
 import com.example.rmaprojekt.Database.TrainingRoomDatabase;
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.Routine;
+import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 
 import java.util.List;
+import java.util.Observable;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 public class TrainingRepository {
 
@@ -56,15 +61,36 @@ public class TrainingRepository {
     }
 
 
-    public void insertRoutine(Routine routine) {
+    public long insertRoutine(Routine routine) {
+
+
+            Callable<Long> value = new Callable<Long>() {
+                @Override
+                public Long call() throws Exception {
+                    return trainingDao.insertRoutine(routine);
+                }
+            };
+            Future future = TrainingRoomDatabase.databaseWriteExecutor.submit(value);
+            Long result = new Long(1);
+            try {
+              result = Long.valueOf((Long)future.get());
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        return result;
+    }
+    public void deleteCrossRef(long routineID) {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
-            trainingDao.insertRoutine(routine);
+            trainingDao.deleteCrossRef(routineID);
         });
     }
 
     public void updateRoutine(Routine routine) {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
-            trainingDao.insertRoutine(routine);
+            trainingDao.updateRoutine(routine);
         });
     }
 
@@ -74,6 +100,12 @@ public class TrainingRepository {
         });
     }
 
+    public void deleteExercisesFromRoutine(long ID){
+        TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
+            trainingDao.deleteExercisesFromRoutine(ID);
+        });
+
+    }
     public LiveData<List<Routine>> getAllRoutines() {
         return allRoutines;
     }
@@ -81,10 +113,18 @@ public class TrainingRepository {
     public RoutineWithExercises getRoutineWithExercises(long routineID) {
         return trainingDao.getRoutineWithExercises(routineID);
     }
-
+    public void insertExerciseIntoRoutine(RoutineExercise crossref){
+        TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
+            trainingDao.insertRoutineExercise(crossref);
+        });
+    }
     public void deleteAllRoutines() {
         TrainingRoomDatabase.databaseWriteExecutor.execute(() -> {
             trainingDao.deleteAllRoutines();
         });
+    }
+
+    public Routine getRoutine(long id) {
+        return trainingDao.getRoutine(id);
     }
 }

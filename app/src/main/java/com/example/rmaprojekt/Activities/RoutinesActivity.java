@@ -2,6 +2,7 @@ package com.example.rmaprojekt.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,12 +13,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.rmaprojekt.Adapter.RoutineAdapter;
 import com.example.rmaprojekt.Entities.Routine;
+import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.R;
+import com.example.rmaprojekt.ViewModels.ExerciseViewModel;
 import com.example.rmaprojekt.ViewModels.RoutineViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -30,6 +34,7 @@ public class RoutinesActivity extends AppCompatActivity {
     private RecyclerView recyclerViewRoutines;
     private FloatingActionButton floatingActionButton;
     private RoutineViewModel routineViewModel;
+    private ExerciseViewModel exerciseViewModel;
     private RoutineAdapter adapter;
 
     @Override
@@ -41,6 +46,7 @@ public class RoutinesActivity extends AppCompatActivity {
         recyclerViewRoutines.setHasFixedSize(true);
         floatingActionButton = findViewById(R.id.fabRoutines);
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
+        exerciseViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
         adapter = new RoutineAdapter();
         recyclerViewRoutines.setAdapter(adapter);
         routineViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
@@ -65,6 +71,21 @@ public class RoutinesActivity extends AppCompatActivity {
             }
         });
 
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                Routine routine = adapter.getRoutineAt(viewHolder.getAdapterPosition());
+                routineViewModel.deleteRoutine(routine);
+                routineViewModel.deleteCrossRef(routine.getID());
+                Toast.makeText(RoutinesActivity.this, "Routine deleted!", Toast.LENGTH_LONG).show();
+            }
+        }).attachToRecyclerView(recyclerViewRoutines);
+
 
     }
 
@@ -75,7 +96,20 @@ public class RoutinesActivity extends AppCompatActivity {
         if (requestCode == ADD_ROUTINE_REQUEST && resultCode == RESULT_OK) {
             String routineName = data.getStringExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME);
             Routine routine = new Routine(routineName);
-            routineViewModel.insert(routine);
+            long routineID = routineViewModel.insert(routine);
+            String[] exerciseIdsString = data.getStringExtra(AddEditRoutineActivity.EXTRA_EXERCISES_IDS)
+                    .trim().split("\\s+");
+            long[] exerciseIds = new long[exerciseIdsString.length];
+            int i = 0;
+            Log.d("exercise IDS", exerciseIds.toString());
+            for (String string : exerciseIdsString) {
+                exerciseIds[i] = Long.parseLong(string);
+                RoutineExercise routineExercise = new RoutineExercise(routineID, exerciseIds[i]);
+                routineViewModel.insertRoutineExercise(routineExercise);
+                i++;
+            }
+
+
             Toast.makeText(RoutinesActivity.this, "Routine saved", Toast.LENGTH_SHORT).show();
 
         } else if (requestCode == EDIT_ROUTINE_REQUEST && resultCode == RESULT_OK) {
@@ -87,10 +121,10 @@ public class RoutinesActivity extends AppCompatActivity {
             }
 
             String routineName = data.getStringExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME);
-
             Routine routine = new Routine(routineName);
             routine.setID(id);
             routineViewModel.update(routine);
+            //exerciseViewModel.updateRoutineWithExercises(id,exerciseList);
             Toast.makeText(RoutinesActivity.this, "Routine updated", Toast.LENGTH_SHORT).show();
 
         } else {

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
@@ -33,6 +34,16 @@ public class Exercise {
     public int reps;
     @ColumnInfo(name = "exercise_sets")
     public int sets;
+    @Ignore
+    public boolean isSelected = false;
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
 
     public Exercise(String exerciseName, int reps, int sets) {
         this.exerciseName = exerciseName;

@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.rmaprojekt.Entities.Exercise;
+import com.example.rmaprojekt.Entities.Routine;
+import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.Repository.TrainingRepository;
 
 import java.util.List;
@@ -37,6 +39,13 @@ public class ExerciseViewModel extends AndroidViewModel {
 
     public void deleteAllExercises() {
         trainingRepository.deleteAllExercises();
+    }
+
+    public void updateRoutineWithExercises(long id, List<Exercise> selectedExercises){
+        trainingRepository.deleteExercisesFromRoutine(id);
+        for(Exercise exercise : selectedExercises){
+            trainingRepository.insertExerciseIntoRoutine(new RoutineExercise(id,exercise.getID()));
+        }
     }
 
     public LiveData<List<Exercise>> getAllExercises() {

@@ -20,7 +20,7 @@ import java.util.List;
 public interface TrainingDao {
 
     //Exercise
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertExercise(Exercise exercise);
 
     @Update
@@ -39,8 +39,8 @@ public interface TrainingDao {
     LiveData<List<Exercise>> getAllExercises();
 
     //Routine
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertRoutine(Routine routine);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertRoutine(Routine routine);
 
     @Delete
     void deleteRoutine(Routine routine);
@@ -60,8 +60,12 @@ public interface TrainingDao {
     @Query("SELECT * FROM routine WHERE routine_id = :routineID")
     RoutineWithExercises getRoutineWithExercises(long routineID);
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertRoutineExercise(RoutineExercise crossRef);
+
+    @Transaction
+    @Query("DELETE FROM RoutineExercise WHERE routine_id = :routineID")
+    void deleteCrossRef(long routineID);
 
     @Transaction
     @Query("SELECT * FROM routine")
@@ -69,4 +73,10 @@ public interface TrainingDao {
 
     @Query("DELETE FROM routine")
     void deleteAllRoutines();
+
+    @Transaction
+    @Query("DELETE FROM RoutineExercise WHERE routine_id = :ID")
+    void deleteExercisesFromRoutine(long ID);
+
+
 }

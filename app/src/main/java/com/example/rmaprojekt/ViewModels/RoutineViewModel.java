@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.rmaprojekt.Entities.Routine;
+import com.example.rmaprojekt.Entities.RoutineExercise;
 import com.example.rmaprojekt.Repository.TrainingRepository;
 
 import java.util.List;
@@ -22,14 +23,6 @@ public class RoutineViewModel extends AndroidViewModel {
         allRoutines = trainingRepository.getAllRoutines();
     }
 
-    public void insertRoutine(Routine routine) {
-        trainingRepository.insertRoutine(routine);
-    }
-
-    public void updateRoutine(Routine routine) {
-        trainingRepository.updateRoutine(routine);
-    }
-
     public void deleteRoutine(Routine routine) {
         trainingRepository.deleteRoutine(routine);
     }
@@ -42,8 +35,16 @@ public class RoutineViewModel extends AndroidViewModel {
         trainingRepository.deleteAllRoutines();
     }
 
-    public void insert(Routine routine) {
-        trainingRepository.insertRoutine(routine);
+    public long insert(Routine routine) {
+        return trainingRepository.insertRoutine(routine);
+    }
+
+    public void deleteCrossRef(long routineID) {
+        trainingRepository.deleteCrossRef(routineID);
+    }
+
+    public void insertRoutineExercise(RoutineExercise routineExercise) {
+        trainingRepository.insertExerciseIntoRoutine(routineExercise);
     }
 
     public void update(Routine routine) {
