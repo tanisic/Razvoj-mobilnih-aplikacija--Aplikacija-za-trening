@@ -18,7 +18,6 @@ import com.example.rmaprojekt.ViewModels.RoutineViewModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 public class TrainActivity extends AppCompatActivity {
 
@@ -52,13 +51,13 @@ public class TrainActivity extends AppCompatActivity {
         routineNameTV.setText(routineWithExercises.routine.getRoutineName());
         exercisesInRoutine = exerciseList.size();
         int currentExerciseIndex = 1;
-        for(Exercise exercise : exerciseList){
+        for (Exercise exercise : exerciseList) {
             int sets = exercise.getSets();
-            for(int i = sets; i>=0;i++){
-                currentExerciseCountTV.setText(String.format("%d / %d",currentExerciseIndex,exercisesInRoutine));
+            for (int i = sets; i >= 0; i++) {
+                currentExerciseCountTV.setText(String.format("%d / %d", currentExerciseIndex, exercisesInRoutine));
                 currentExercisenameTV.setText(exercise.getName());
-                currentExerciseRepsTV.setText(exercise.getReps()+" reps per set");
-                currentExerciseSetsTV.setText(sets+" sets to go");
+                currentExerciseRepsTV.setText(exercise.getReps() + " reps per set");
+                currentExerciseSetsTV.setText(sets + " sets to go");
 
             }
             currentExerciseIndex++;
@@ -66,9 +65,9 @@ public class TrainActivity extends AppCompatActivity {
         startPauseBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(timerRunning){
+                if (timerRunning) {
                     pauseTimer();
-                }else {
+                } else {
                     startTimer();
                 }
             }
@@ -83,7 +82,7 @@ public class TrainActivity extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(timeLeftInMillis,1000) {
+        countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 timeLeftInMillis = millisUntilFinished;
@@ -99,13 +98,15 @@ public class TrainActivity extends AppCompatActivity {
         timerRunning = true;
         startPauseBTN.setText("PAUSE");
     }
-    private void resetTimer(){
+
+    private void resetTimer() {
 
     }
+
     private void updateCountDownText() {
         int minutes = (int) (timeLeftInMillis / 1000) / 60;
         int seconds = (int) (timeLeftInMillis / 1000) % 60;
-        String timeLeftFormatted = String.format(Locale.getDefault(),"%02d:%02d",minutes,seconds);
+        String timeLeftFormatted = String.format(Locale.getDefault(), "%02d:%02d", minutes, seconds);
         countDownTV.setText(timeLeftFormatted);
     }
 

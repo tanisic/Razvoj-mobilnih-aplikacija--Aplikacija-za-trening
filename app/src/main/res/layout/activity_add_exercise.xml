@@ -8,9 +8,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
         android:text="Exercise name:"
         android:textSize="20dp"></TextView>
 
@@ -58,10 +58,10 @@
     <NumberPicker
         android:id="@+id/number_picker_sets"
         android:layout_width="match_parent"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_height="wrap_content"
-         />
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -71,21 +71,23 @@
 
         android:text="Pause between sets in seconds: "
         android:textSize="20dp" />
+
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
 
         ></SeekBar>
+
     <TextView
         android:id="@+id/secondsTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="170dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:text="Seconds"
         android:textSize="17dp" />

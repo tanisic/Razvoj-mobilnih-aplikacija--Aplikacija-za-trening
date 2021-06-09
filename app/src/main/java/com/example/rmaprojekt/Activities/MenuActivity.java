@@ -54,7 +54,7 @@ public class MenuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void trainActivity(){
+    private void trainActivity() {
         Intent intent = new Intent(this, ChooseTrainingActivity.class);
         startActivity(intent);
     }

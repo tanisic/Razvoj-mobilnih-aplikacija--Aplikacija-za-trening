@@ -38,6 +38,7 @@ public class Exercise {
     public int exercise_pause_seconds;
     @Ignore
     public boolean isSelected = false;
+
     @Ignore
     public Exercise() {
 

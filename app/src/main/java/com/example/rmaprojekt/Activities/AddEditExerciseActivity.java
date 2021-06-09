@@ -53,7 +53,7 @@ public class AddEditExerciseActivity extends AppCompatActivity {
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                secondsTV.setText(progress+ " sec");
+                secondsTV.setText(progress + " sec");
                 exercisePauseSeconds = progress;
             }
 
@@ -75,7 +75,7 @@ public class AddEditExerciseActivity extends AppCompatActivity {
             exerciseNameEditText.setText(intent.getStringExtra(EXTRA_EXERCISE_NAME));
             repsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_REPS, 1));
             setsNumberPicker.setValue(intent.getIntExtra(EXTRA_EXERCISE_SETS, 1));
-            seekBar.setProgress(intent.getIntExtra(EXTRA_EXERCISE_SECONDS,10));
+            seekBar.setProgress(intent.getIntExtra(EXTRA_EXERCISE_SECONDS, 10));
         } else {
             setTitle("Add Exercise");
         }

@@ -1,13 +1,13 @@
 package com.example.rmaprojekt.Activities;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.os.Bundle;
 
 import com.example.rmaprojekt.Adapter.RoutineAdapter;
 import com.example.rmaprojekt.Entities.Routine;
@@ -40,15 +40,15 @@ public class ChooseTrainingActivity extends AppCompatActivity {
         adapter.setOnRoutineClickListener(new RoutineAdapter.OnRoutineClickListener() {
             @Override
             public void onRoutineClick(Routine routine) {
-                Intent intent = new Intent(ChooseTrainingActivity.this,TrainActivity.class);
-                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_ID,routine.getID());
-                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME,routine.getRoutineName());
+                Intent intent = new Intent(ChooseTrainingActivity.this, TrainActivity.class);
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_ID, routine.getID());
+                intent.putExtra(AddEditRoutineActivity.EXTRA_ROUTINE_NAME, routine.getRoutineName());
                 startActivity(intent);
             }
         });
     }
 
-    private void SetUI(){
+    private void SetUI() {
         recyclerView = findViewById(R.id.recyclerviewTrainRoutine);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);

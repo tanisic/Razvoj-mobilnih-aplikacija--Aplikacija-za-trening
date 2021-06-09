@@ -99,8 +99,8 @@ public class ExercisesActivity extends AppCompatActivity {
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
             int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
             int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
-            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS,10);
-            Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets,exercisePauseSeconds);
+            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS, 10);
+            Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets, exercisePauseSeconds);
             exerciseViewModel.insert(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise saved", Toast.LENGTH_SHORT).show();
 
@@ -115,8 +115,8 @@ public class ExercisesActivity extends AppCompatActivity {
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
             int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
             int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
-            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS,10);
-            Exercise exercise = new Exercise(exerciseName, Integer.valueOf(exerciseReps), Integer.valueOf(exerciseSets),exercisePauseSeconds);
+            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS, 10);
+            Exercise exercise = new Exercise(exerciseName, Integer.valueOf(exerciseReps), Integer.valueOf(exerciseSets), exercisePauseSeconds);
             exercise.setID(id);
             exerciseViewModel.update(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise updated", Toast.LENGTH_SHORT).show();
