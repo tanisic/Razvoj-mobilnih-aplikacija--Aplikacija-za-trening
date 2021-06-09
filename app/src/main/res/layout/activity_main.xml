@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/buttonLogs"
+        android:id="@+id/buttonTrain"
         android:layout_width="233dp"
         android:layout_height="85dp"
         android:layout_marginTop="32dp"

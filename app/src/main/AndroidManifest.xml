@@ -11,9 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.RMAprojekt">
+        <activity android:name=".Activities.TrainActivity"></activity>
+        <activity android:name=".Activities.ChooseTrainingActivity" />
         <activity
             android:name=".Activities.AddEditRoutineActivity"
-            android:parentActivityName=".Activities.RoutinesActivity"></activity>
+            android:parentActivityName=".Activities.RoutinesActivity" />
         <activity android:name=".Activities.RoutinesActivity" />
         <activity
             android:name=".Activities.AddEditExerciseActivity"

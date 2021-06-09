@@ -92,8 +92,9 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
                     } catch (NumberFormatException e) {
                         e.printStackTrace();
                     }
-
-                    selectedExercises.add(exerciseViewModel.getExerciseByID(exerciseIDS[i]));
+                    Exercise selectedExercise = exerciseViewModel.getExerciseByID(exerciseIDS[i]);
+                    selectedExercise.setSelected(true);
+                    selectedExercises.add(selectedExercise);
                     i++;
                 }
             } else {

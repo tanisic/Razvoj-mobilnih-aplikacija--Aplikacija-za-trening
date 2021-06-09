@@ -34,17 +34,20 @@ public class Exercise {
     public int reps;
     @ColumnInfo(name = "exercise_sets")
     public int sets;
+    @ColumnInfo(name = "exercise_pause")
+    public int exercise_pause_seconds;
     @Ignore
     public boolean isSelected = false;
-
+    @Ignore
     public Exercise() {
 
     }
 
-    public Exercise(String exerciseName, int reps, int sets) {
+    public Exercise(String exerciseName, int reps, int sets, int exercise_pause_seconds) {
         this.exerciseName = exerciseName;
         this.reps = reps;
         this.sets = sets;
+        this.exercise_pause_seconds = exercise_pause_seconds;
     }
 
     public boolean isSelected() {
@@ -73,6 +76,14 @@ public class Exercise {
 
     public int getSets() {
         return sets;
+    }
+
+    public int getExercise_pause_seconds() {
+        return exercise_pause_seconds;
+    }
+
+    public void setExercise_pause_seconds(int exercise_pause_seconds) {
+        this.exercise_pause_seconds = exercise_pause_seconds;
     }
 
     @Override

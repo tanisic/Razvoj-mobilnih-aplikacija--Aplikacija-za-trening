@@ -67,6 +67,7 @@ public class ExercisesActivity extends AppCompatActivity {
                 intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, exercise.getReps());
                 intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, exercise.getSets());
                 intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_ID, exercise.getID());
+                intent.putExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS, exercise.getExercise_pause_seconds());
                 startActivityForResult(intent, EDIT_EXERCISE_REQUEST);
             }
         });
@@ -98,7 +99,8 @@ public class ExercisesActivity extends AppCompatActivity {
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
             int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
             int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
-            Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets);
+            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS,10);
+            Exercise exercise = new Exercise(exerciseName, exerciseReps, exerciseSets,exercisePauseSeconds);
             exerciseViewModel.insert(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise saved", Toast.LENGTH_SHORT).show();
 
@@ -113,7 +115,8 @@ public class ExercisesActivity extends AppCompatActivity {
             String exerciseName = data.getStringExtra(AddEditExerciseActivity.EXTRA_EXERCISE_NAME);
             int exerciseReps = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_REPS, 1);
             int exerciseSets = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SETS, 1);
-            Exercise exercise = new Exercise(exerciseName, Integer.valueOf(exerciseReps), Integer.valueOf(exerciseSets));
+            int exercisePauseSeconds = data.getIntExtra(AddEditExerciseActivity.EXTRA_EXERCISE_SECONDS,10);
+            Exercise exercise = new Exercise(exerciseName, Integer.valueOf(exerciseReps), Integer.valueOf(exerciseSets),exercisePauseSeconds);
             exercise.setID(id);
             exerciseViewModel.update(exercise);
             Toast.makeText(ExercisesActivity.this, "Exercise updated", Toast.LENGTH_SHORT).show();
