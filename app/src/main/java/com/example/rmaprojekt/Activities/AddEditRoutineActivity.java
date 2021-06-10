@@ -38,7 +38,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
     public static final String EXTRA_EXERCISES_IDS =
             "com.example.rmaprojekt.Activities.ADD_EXERCISES_IDS";
     List<Exercise> selectedExercises;
-    private Button updateExercisesBTN;
+
     private EditText routineNameEditText;
     private String routineName;
     private RecyclerView recyclerView;
@@ -68,13 +68,6 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
         });
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         Intent intent = getIntent();
-        updateExercisesBTN.setVisibility(View.VISIBLE);
-        updateExercisesBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectedExercises = adapter.getSelectedExercises();
-            }
-        });
         if (intent.hasExtra(EXTRA_ROUTINE_ID)) {
             setTitle("Edit Routine");
             routineID = intent.getLongExtra(EXTRA_ROUTINE_ID, 1);
@@ -89,12 +82,15 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
                 for (String string : exerciseIdsString) {
                     try {
                         exerciseIDS[i] = Long.valueOf(string);
-                    } catch (NumberFormatException e) {
+                        Log.d("ID", String.valueOf(exerciseIDS[i]));
+                        Exercise selectedExercise = exerciseViewModel.getExerciseByID(exerciseIDS[i]);
+                        selectedExercise.setSelected(true);
+                        selectedExercises.add(selectedExercise);
+                        adapter.notifyDataSetChanged();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    Exercise selectedExercise = exerciseViewModel.getExerciseByID(exerciseIDS[i]);
-                    selectedExercise.setSelected(true);
-                    selectedExercises.add(selectedExercise);
+
                     i++;
                 }
             } else {
@@ -108,7 +104,6 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
 
     private void SetupUI() {
         routineNameEditText = findViewById(R.id.addRoutineName);
-        updateExercisesBTN = findViewById(R.id.updateExercises);
         recyclerView = findViewById(R.id.recyclerview_RoutineWithExercises);
 
     }
@@ -158,10 +153,6 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
 
     @Override
     public void onExerciseInRoutineAction(Boolean isSelected) {
-        if (isSelected) {
-            updateExercisesBTN.setVisibility(View.VISIBLE);
-        } else {
-            updateExercisesBTN.setVisibility(View.GONE);
-        }
+
     }
 }

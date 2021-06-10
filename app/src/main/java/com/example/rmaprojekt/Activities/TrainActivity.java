@@ -6,6 +6,7 @@ import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -22,20 +23,22 @@ import java.util.Locale;
 public class TrainActivity extends AppCompatActivity {
 
 
-    private TextView routineNameTV, currentExercisenameTV, currentExerciseSetsTV,
+    private TextView routineNameTV, currentExerciseNameTV, currentExerciseSetsTV,
             currentExerciseRepsTV, currentExerciseCountTV;
     private TextView countDownTV;
     private Button startPauseBTN;
     private Button nextExerciseBTN;
     private CountDownTimer countDownTimer;
     private boolean timerRunning;
+    private int exerciseIndex = 0;
+    private int sets;
     private long timeLeftInMillis;
     private int exercisesInRoutine;
     private RoutineWithExercises routineWithExercises;
     private RoutineViewModel routineViewModel;
     private List<Exercise> exerciseList = new ArrayList<>();
     private long routineID;
-
+    private long lastTimeLeftInMillis;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +50,20 @@ public class TrainActivity extends AppCompatActivity {
         routineID = data.getLongExtra(AddEditRoutineActivity.EXTRA_ROUTINE_ID, 0);
         routineWithExercises = routineViewModel.getRoutineWithExercises(routineID);
         exerciseList = routineWithExercises.exercises;
-        timeLeftInMillis = 60000;
         routineNameTV.setText(routineWithExercises.routine.getRoutineName());
         exercisesInRoutine = exerciseList.size();
-        int currentExerciseIndex = 1;
-        for (Exercise exercise : exerciseList) {
-            int sets = exercise.getSets();
-            for (int i = sets; i >= 0; i++) {
-                currentExerciseCountTV.setText(String.format("%d / %d", currentExerciseIndex, exercisesInRoutine));
-                currentExercisenameTV.setText(exercise.getName());
-                currentExerciseRepsTV.setText(exercise.getReps() + " reps per set");
-                currentExerciseSetsTV.setText(sets + " sets to go");
+        //rutina nikada ne može biti prazna stoga nije potrebna provjera
 
+        startRoutine();
+        nextExerciseBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (exerciseIndex < exerciseList.size()) {
+                    exerciseIndex++;
+                    startRoutine();
+                }
             }
-            currentExerciseIndex++;
-        }
+        });
         startPauseBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,6 +74,41 @@ public class TrainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void startRoutine() {
+        if (exerciseIndex == 0) {
+            Exercise exercise1 = exerciseList.get(exerciseIndex);
+            sets = exercise1.getSets();
+            timeLeftInMillis = exercise1.getExercise_pause_seconds() * 1000;
+            updateCountDownText();
+            currentExerciseNameTV.setText(exercise1.getName());
+            currentExerciseRepsTV.setText(exercise1.getReps() + " reps per set");
+            updateSetsToGoText();
+            currentExerciseCountTV.setText(String.format("%d / %d", exerciseIndex + 1, exercisesInRoutine));
+            startSet(exercise1);
+        }
+        if (exerciseIndex != exerciseList.size()) {
+            Exercise exercise1 = exerciseList.get(exerciseIndex);
+            sets = exercise1.getSets();
+            timeLeftInMillis = exercise1.getExercise_pause_seconds() * 1000;
+            currentExerciseNameTV.setText(exercise1.getName());
+            currentExerciseRepsTV.setText(exercise1.getReps() + " reps per set");
+            currentExerciseCountTV.setText(String.format("%d / %d", exerciseIndex + 1, exercisesInRoutine));
+            startSet(exercise1);
+        }
+
+    }
+
+    private void startSet(Exercise exercise) {
+        if (sets >= 0) {
+            timeLeftInMillis = exercise.getExercise_pause_seconds() * 1000;
+            lastTimeLeftInMillis = timeLeftInMillis;
+            updateCountDownText();
+            updateSetsToGoText();
+        } else {
+            exerciseIndex++;
+        }
     }
 
     private void pauseTimer() {
@@ -93,14 +130,38 @@ public class TrainActivity extends AppCompatActivity {
             public void onFinish() {
                 timerRunning = false;
                 startPauseBTN.setText("START");
+                sets--;
+                updateSetsToGoText();
+                updateCountDownText();
+                if (sets <= 0) {
+                    if (exerciseIndex < exerciseList.size()) {
+                        exerciseIndex++;
+                        startRoutine();
+                    }
+                    else{
+                        trainingDone();
+                    }
+                }else{
+                    timeLeftInMillis = lastTimeLeftInMillis;
+                }
             }
+
+
         }.start();
         timerRunning = true;
         startPauseBTN.setText("PAUSE");
     }
 
+    private void trainingDone() {
+        Toast.makeText(this,"Training done, good job!",Toast.LENGTH_LONG);
+    }
+
     private void resetTimer() {
 
+    }
+
+    private void updateSetsToGoText() {
+        currentExerciseSetsTV.setText(sets + " sets to go");
     }
 
     private void updateCountDownText() {
@@ -113,7 +174,7 @@ public class TrainActivity extends AppCompatActivity {
     private void SetUI() {
         routineNameTV = findViewById(R.id.routineNameTrainTV);
         countDownTV = findViewById(R.id.exerciseSecondsTV);
-        currentExercisenameTV = findViewById(R.id.currentExerciseNameTV);
+        currentExerciseNameTV = findViewById(R.id.currentExerciseNameTV);
         currentExerciseSetsTV = findViewById(R.id.currentExerciseSetsTV);
         currentExerciseRepsTV = findViewById(R.id.currentExerciseRepsTV);
         currentExerciseCountTV = findViewById(R.id.currentExerciseCountTV);

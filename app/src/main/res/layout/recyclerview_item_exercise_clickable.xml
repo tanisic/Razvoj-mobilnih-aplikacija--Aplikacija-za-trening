@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="100dp"
     android:layout_marginBottom="20dp"
-    android:background="@android:color/holo_blue_bright"
+    style="@style/exercise_title"
     android:orientation="vertical">
 
 
@@ -15,7 +15,6 @@
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_marginStart="4dp"
-
         android:text="Exercise name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
