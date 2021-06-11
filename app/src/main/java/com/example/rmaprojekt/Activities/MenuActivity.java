@@ -18,6 +18,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUI();
+        setTitle("Shapeit Workout Planner");
         btnExercises.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

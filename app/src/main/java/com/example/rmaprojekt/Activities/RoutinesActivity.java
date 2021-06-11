@@ -50,6 +50,7 @@ public class RoutinesActivity extends AppCompatActivity {
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
         exerciseViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
         adapter = new RoutineAdapter();
+        setTitle("Add/Edit routine");
         recyclerViewRoutines.setAdapter(adapter);
         routineViewModel.getAllRoutines().observe(this, new Observer<List<Routine>>() {
             @Override

@@ -37,6 +37,7 @@ public class ExercisesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercises);
         setUI();
+        setTitle("Add/Edit exercise");
         exerciseViewModel = new ViewModelProvider(this).get(ExerciseViewModel.class);
         exerciseAdapter = new ExerciseAdapter();
         recyclerView.setAdapter(exerciseAdapter);

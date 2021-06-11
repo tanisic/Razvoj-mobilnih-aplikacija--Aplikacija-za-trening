@@ -28,6 +28,7 @@ public class ChooseTrainingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_training);
         SetUI();
+        setTitle("Choose training");
         routineViewModel = new ViewModelProvider(this).get(RoutineViewModel.class);
         adapter = new RoutineAdapter();
         recyclerView.setAdapter(adapter);
