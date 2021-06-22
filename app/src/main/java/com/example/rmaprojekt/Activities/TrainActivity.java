@@ -89,7 +89,12 @@ public class TrainActivity extends AppCompatActivity {
             return;
         }
         if (exerciseIndex == 0) {
-            Exercise exercise1 = exerciseList.get(exerciseIndex);
+            Exercise exercise1 = new Exercise();
+            try { exercise1 = exerciseList.get(exerciseIndex);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
             sets = exercise1.getSets();
             timeLeftInMillis = exercise1.getExercise_pause_seconds() * 1000;
             updateCountDownText();

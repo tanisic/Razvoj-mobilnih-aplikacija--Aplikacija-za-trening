@@ -81,7 +81,7 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
                 selectedExercises = new ArrayList<Exercise>();
                 for (String string : exerciseIdsString) {
                     try {
-                        exerciseIDS[i] = Long.valueOf(string);
+                        exerciseIDS[i] = Long.parseLong(string);
                         Log.d("ID", String.valueOf(exerciseIDS[i]));
                         Exercise selectedExercise = exerciseViewModel.getExerciseByID(exerciseIDS[i]);
                         selectedExercise.setSelected(true);
