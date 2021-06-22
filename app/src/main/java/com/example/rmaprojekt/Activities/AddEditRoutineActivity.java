@@ -129,8 +129,9 @@ public class AddEditRoutineActivity extends AppCompatActivity implements Exercis
 
     private void saveRoutine() {
         routineName = routineNameEditText.getText().toString();
-        if (routineName.trim().isEmpty()) {
-            Toast.makeText(getApplicationContext(), "You did not entered routine name!", Toast.LENGTH_LONG).show();
+        if (routineName.trim().isEmpty() || adapter.getSelectedExercises().size() == 0) {
+            Toast.makeText(getApplicationContext(),
+                    "You did not entered routine name or selected any exercise!", Toast.LENGTH_LONG).show();
             return;
         } else {
             Intent data = new Intent();

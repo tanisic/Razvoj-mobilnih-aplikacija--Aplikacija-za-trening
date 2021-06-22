@@ -3,6 +3,7 @@ package com.example.rmaprojekt.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.rmaprojekt.Entities.Exercise;
 import com.example.rmaprojekt.Entities.RoutineWithExercises;
 import com.example.rmaprojekt.R;
+import com.example.rmaprojekt.Toolbar.TrainingDoneAlertDialog;
 import com.example.rmaprojekt.ViewModels.RoutineViewModel;
 
 import java.util.ArrayList;
@@ -52,6 +54,7 @@ public class TrainActivity extends AppCompatActivity {
         exerciseList = routineWithExercises.exercises;
         routineNameTV.setText(routineWithExercises.routine.getRoutineName());
         exercisesInRoutine = exerciseList.size();
+        setTitle("Train!");
         //rutina nikada ne može biti prazna stoga nije potrebna provjera
 
         startRoutine();
@@ -61,6 +64,10 @@ public class TrainActivity extends AppCompatActivity {
                 if (exerciseIndex < exerciseList.size()) {
                     exerciseIndex++;
                     startRoutine();
+                } else if (exerciseIndex == exerciseList.size()) {
+                    Log.d("TRAINING DONE", "DONE");
+                    trainingDone();
+                    return;
                 }
             }
         });
@@ -77,6 +84,10 @@ public class TrainActivity extends AppCompatActivity {
     }
 
     private void startRoutine() {
+        if (exerciseIndex == exerciseList.size()) {
+            trainingDone();
+            return;
+        }
         if (exerciseIndex == 0) {
             Exercise exercise1 = exerciseList.get(exerciseIndex);
             sets = exercise1.getSets();
@@ -137,11 +148,10 @@ public class TrainActivity extends AppCompatActivity {
                     if (exerciseIndex < exerciseList.size()) {
                         exerciseIndex++;
                         startRoutine();
-                    }
-                    else{
+                    } else {
                         trainingDone();
                     }
-                }else{
+                } else {
                     timeLeftInMillis = lastTimeLeftInMillis;
                 }
             }
@@ -153,7 +163,8 @@ public class TrainActivity extends AppCompatActivity {
     }
 
     private void trainingDone() {
-        Toast.makeText(this,"Training done, good job!",Toast.LENGTH_LONG);
+        TrainingDoneAlertDialog dialog = new TrainingDoneAlertDialog();
+        dialog.show(getSupportFragmentManager(), "Trainng done");
     }
 
     private void resetTimer() {

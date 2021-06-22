@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#AAAAAA"
     tools:context=".Activities.TrainActivity">
 
     <Button
@@ -14,7 +15,7 @@
         android:layout_marginLeft="50dp"
         android:layout_marginEnd="148dp"
         android:layout_marginBottom="194dp"
-        android:text="Next exercise"
+        android:text="SKIP EXERCISE"
         android:textSize="10dp" />
 
     <TextView
@@ -34,12 +35,13 @@
         android:layout_above="@+id/exerciseSecondsTV"
 
         android:layout_alignParentStart="true"
-        android:layout_marginStart="100dp"
+        android:layout_marginStart="116dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="103dp"
+        android:layout_marginBottom="100dp"
         android:paddingLeft="20dp"
         android:text="Current exercise reps"
         android:textSize="20dp"></TextView>
+
 
     <TextView
         android:id="@+id/currentExerciseNameTV"
@@ -48,9 +50,9 @@
         android:layout_above="@+id/exerciseSecondsTV"
 
         android:layout_alignParentStart="true"
-        android:layout_marginStart="91dp"
+        android:layout_marginStart="116dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="135dp"
+        android:layout_marginBottom="128dp"
         android:paddingLeft="20dp"
         android:text="Current exercise name"
         android:textSize="20dp"></TextView>
@@ -62,13 +64,12 @@
         android:layout_above="@+id/exerciseSecondsTV"
 
         android:layout_alignParentStart="true"
-        android:layout_marginStart="75dp"
+        android:layout_marginStart="116dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="72dp"
         android:paddingLeft="20dp"
         android:text="Current exercise sets to go"
         android:textSize="20dp"></TextView>
-
 
     <TextView
         android:id="@+id/currentExerciseCountTV"
@@ -79,7 +80,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="175dp"
         android:layout_marginEnd="4dp"
-        android:layout_marginBottom="225dp"
+        android:layout_marginBottom="206dp"
 
         android:text="1/12"
         android:textSize="25dp"></TextView>
